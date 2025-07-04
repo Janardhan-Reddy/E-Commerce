@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "4C729B21-CF20-4A91-A1F6-EFC043662FBC"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AEFA8919-FFF6-429C-A19A-9A3D779245D7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GDRB- Ecommerce/HomeViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DFC1916D-A4B9-4083-A964-1D7129399836"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GDRB- Ecommerce/HomeViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GDRB- Ecommerce/ProductDetailsController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "ProductDetailsController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408 - 61dfb21f68f1d3dc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GDRB__Ecommerce.ProductDetailsController.TitleName.getter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "GDRB- Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/srinivasuluarigela/Desktop/GDRB%20Project%20Folder/GDRB-%20Ecommerce/GDRB-%20Ecommerce/ProductDetailsController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408 - b711dd1b67f23c8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GDRB__Ecommerce.ProductDetailsController.TitleName.setter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "GDRB- Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/srinivasuluarigela/Desktop/GDRB%20Project%20Folder/GDRB-%20Ecommerce/GDRB-%20Ecommerce/ProductDetailsController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "136">
+               </Location>
+               <Location
+                  uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408 - b97ea99bdde2fdf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GDRB__Ecommerce.ProductDetailsController.TitleName.modify : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "GDRB- Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/srinivasuluarigela/Desktop/GDRB%20Project%20Folder/GDRB-%20Ecommerce/GDRB-%20Ecommerce/ProductDetailsController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408 - b18ae1cb1ebe5af2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GDRB__Ecommerce.ProductDetailsController.TitleName.modify : Swift.Optional&lt;Swift.String&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "GDRB- Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/srinivasuluarigela/Desktop/GDRB%20Project%20Folder/GDRB-%20Ecommerce/GDRB-%20Ecommerce/ProductDetailsController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408 - db862eb2dcbca31c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GDRB__Ecommerce.ProductDetailsController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; GDRB__Ecommerce.ProductDetailsController"
+                  moduleName = "GDRB- Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/srinivasuluarigela/Desktop/GDRB%20Project%20Folder/GDRB-%20Ecommerce/GDRB-%20Ecommerce/ProductDetailsController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "280">
+               </Location>
+               <Location
+                  uuid = "F90439A7-98FB-4301-80FD-8FDE42BF8408 - 167974f887807d14"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GDRB__Ecommerce.ProductDetailsController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;GDRB__Ecommerce.ProductDetailsController&gt;"
+                  moduleName = "GDRB- Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/srinivasuluarigela/Desktop/GDRB%20Project%20Folder/GDRB-%20Ecommerce/GDRB-%20Ecommerce/ProductDetailsController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "256">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D78BB0F-5AC2-4976-ACB3-30A5C103EC04"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GDRB- Ecommerce/ProductDetailsController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

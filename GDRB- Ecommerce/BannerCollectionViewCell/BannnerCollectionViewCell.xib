@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BannnerCollectionViewCell" id="gTV-IL-0wX" customClass="BannnerCollectionViewCell" customModule="GDRB__Ecommerce" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="378" height="175"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="378" height="175"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adB-UW-1l6">
+                        <rect key="frame" x="2" y="5" width="374" height="165"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wtF-M1-0eO">
+                                <rect key="frame" x="2" y="2" width="370" height="161"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="0.70137117346938771" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="wtF-M1-0eO" secondAttribute="bottom" constant="2" id="2Ir-jP-3aO"/>
+                            <constraint firstItem="wtF-M1-0eO" firstAttribute="leading" secondItem="adB-UW-1l6" secondAttribute="leading" constant="2" id="W07-2F-k11"/>
+                            <constraint firstAttribute="trailing" secondItem="wtF-M1-0eO" secondAttribute="trailing" constant="2" id="dAU-Eo-UWR"/>
+                            <constraint firstItem="wtF-M1-0eO" firstAttribute="top" secondItem="adB-UW-1l6" secondAttribute="top" constant="2" id="gnb-w4-yrg"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="adB-UW-1l6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="CRL-9u-2N8"/>
+                <constraint firstAttribute="bottom" secondItem="adB-UW-1l6" secondAttribute="bottom" constant="5" id="FOr-MJ-tLU"/>
+                <constraint firstItem="adB-UW-1l6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="U9w-n5-ZKC"/>
+                <constraint firstAttribute="trailing" secondItem="adB-UW-1l6" secondAttribute="trailing" constant="2" id="W9g-dR-lPt"/>
+            </constraints>
+            <size key="customSize" width="228" height="124"/>
+            <connections>
+                <outlet property="bannerBackgroundView" destination="adB-UW-1l6" id="bxW-0A-Z8k"/>
+                <outlet property="bannerImageView" destination="wtF-M1-0eO" id="F3P-3i-U3H"/>
+            </connections>
+            <point key="canvasLocation" x="109.9236641221374" y="45.774647887323944"/>
+        </collectionViewCell>
+    </objects>
+</document>
