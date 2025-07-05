@@ -7,8 +7,7 @@
 import UIKit
 class DeliveryAddress:UIViewController{
     var storedEmail:String = ""
-    var insertDetails = AddressDtaBase()
-    var addressData:[AddressDetails] = []
+  
   
     @IBOutlet weak var WorkButton: UIButton!
     
@@ -59,7 +58,7 @@ class DeliveryAddress:UIViewController{
 
         let addressString = flatNumberField.text! + space + localityField.text! + space + landmarkFileld.text! + space + CityField.text! + space + StateField.text! + space + "India" + space + "-" + space + PincodeField.text!
         // Use the storedEmail value as needed
-              insertDetails.insert(email: storedEmail, address: addressString, name: FullNameField.text!, phoneNumber: PhoneNumberField.text!)
+            
             
         self.navigationController?.popViewController(animated: true)
             
@@ -71,16 +70,5 @@ class DeliveryAddress:UIViewController{
         
         storedEmail =  UserDefaults.standard.string(forKey: "userEmail")!
       self.title = "My Address"
-        let data = insertDetails.retrieveAddressDetails()
-        for i in data {
-            print(i.phoneNumber)
-            print(i.name)
-            print(i.email)
-            print(i.address)
-        }
-       
-      
-      
-       
     }
 }

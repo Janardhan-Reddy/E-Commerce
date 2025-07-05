@@ -50,7 +50,8 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
       // Kick off all the image fetches exactly once:
       for (i, banner) in (banners ?? []).enumerated() {
         let path = banner.image_path?.replacingOccurrences(of: "\\", with: "/") ?? ""
-        UIImage.fetchImage(from: path) { [weak self] image in
+          let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
+          UIImage.fetchImage(from: path,baseURL: baseurl ) { [weak self] image in
           guard let self = self else { return }
           DispatchQueue.main.async {
             self.bannerImages[i] = image

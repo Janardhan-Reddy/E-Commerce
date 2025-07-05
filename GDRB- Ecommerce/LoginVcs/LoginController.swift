@@ -13,7 +13,7 @@ class LoginController:UIViewController{
     
     var queryStatement: OpaquePointer? = nil
     
-    let dataManager = RegistrationDataBase.getInstance()
+
     var isPasswordVisible = false
     var viewModel = RegisterViewModel()
     
@@ -116,11 +116,11 @@ class LoginController:UIViewController{
     
     //assigning a variables to classes
     var users:[LoginUsers] = []
-    var Database:LoginDataBase = LoginDataBase()
+  
     
     override func viewDidLoad() {
         //insert login Data
-        users = Database.readFromLogin()
+       
         self.userNameTextField.text = "gdrbuser@gmail.com"
         self.passWordTextField.text = "gdrbuser"
         self.navigationItem.setHidesBackButton(true, animated: false)
@@ -163,14 +163,9 @@ class LoginController:UIViewController{
         eyeButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
         
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 30))
-        eyeButton.frame.origin.x -= 18
-        
-        passWordTextField.rightView = paddingView
-        passWordTextField.rightView?.addSubview(eyeButton)
+    
+        passWordTextField.rightView = eyeButton
         passWordTextField.rightViewMode = .always
-        
-        // Set the initial state for secure text entry
         passWordTextField.isSecureTextEntry = true
     }
 

@@ -10,38 +10,51 @@ import UIKit
 
 
 extension UIImage {
-    static let baseURL = "https://gdrbpractice.gdrbtechnologies.com/"
+   
 
-    static func fetchImage(from endpoint: String, completion: @escaping (UIImage?) -> Void) {
-        let fullURLString = endpoint.hasPrefix("http")
-            ? endpoint
-            : baseURL + (endpoint.hasPrefix("/") ? String(endpoint.dropFirst()) : endpoint)
-
-        guard let encodedURLString = fullURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let url = URL(string: encodedURLString) else {
-            print("Invalid image URL:", endpoint)
-            completion(nil)
-            return
-        }
-
-        let request = URLRequest(url: url)
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(" Image fetch error:", error)
+    static func fetchImage(
+            from endpoint: String,
+            baseURL: String? = nil,
+            completion: @escaping (UIImage?) -> Void
+        ) {
+            // Determine the full URL string
+            let fullURLString: String
+            if endpoint.hasPrefix("http") {
+                fullURLString = endpoint
+            } else if let baseURL = baseURL {
+                fullURLString = baseURL + (endpoint.hasPrefix("/") ? String(endpoint.dropFirst()) : endpoint)
+            } else {
+                print("Relative endpoint provided but no baseURL: \(endpoint)")
                 completion(nil)
                 return
             }
 
-            guard let data = data, let image = UIImage(data: data) else {
-                print(" No image data or failed to decode image.")
+            // Encode and validate the URL
+            guard let encodedURLString = fullURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                  let url = URL(string: encodedURLString) else {
+                print("Invalid image URL:", fullURLString)
                 completion(nil)
                 return
             }
 
-            completion(image)
-        }
+            // Perform the request
+            let request = URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                if let error = error {
+                    print("Image fetch error:", error)
+                    completion(nil)
+                    return
+                }
 
-        task.resume()
-    }
+                guard let data = data, let image = UIImage(data: data) else {
+                    print("No image data or failed to decode image.")
+                    completion(nil)
+                    return
+                }
+
+                completion(image)
+            }
+
+            task.resume()
+        }
 }

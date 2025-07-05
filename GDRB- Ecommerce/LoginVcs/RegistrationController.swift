@@ -14,17 +14,16 @@ class RegistrationController:UIViewController,UITextFieldDelegate{
    // var regUsers:[RegistrationUsers] = []
     let viewModel = RegisterViewModel()
     var regResponse : RegisterationResponse?
+    var isPasswordVisible = false
     //UILabels
-    @IBOutlet weak var FirstLabel: UILabel!
-    @IBOutlet weak var LastLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var DateLabel: UILabel!
     @IBOutlet weak var EmailLabel: UILabel!
     @IBOutlet weak var PasswordLabel: UILabel!
     @IBOutlet weak var ConfirmationLabel: UILabel!
     
-    @IBOutlet weak var firstNameTxtField: UITextField!
+    @IBOutlet weak var nameTxtField: UITextField!
     
-    @IBOutlet weak var lastNameTxtField: UITextField!
     
     @IBOutlet weak var mobileNumberTxtField: UITextField!
     
@@ -38,8 +37,8 @@ class RegistrationController:UIViewController,UITextFieldDelegate{
     @IBOutlet weak var registerButton: UIButton!
     
     @IBAction func registerButtonAction(_ sender: Any) {
-        guard  ((firstNameTxtField.text!.count) >= 1) && ((lastNameTxtField.text!.count) >= 1) else {
-            showAlert(message: "Please enter first and last name")
+        guard  ((nameTxtField.text!.count) >= 1)else {
+            showAlert(message: "Please enter name")
             return
         }
         let email = isValidEmail(emailTxtField.text!)
@@ -58,7 +57,7 @@ class RegistrationController:UIViewController,UITextFieldDelegate{
         }
         
     
-            let name = (firstNameTxtField.text ?? "") + " " + (lastNameTxtField.text ?? "")
+        let name = (nameTxtField.text ?? "")
             let emailId =  emailTxtField.text ?? ""
             let password = passwordTxtField.text ?? ""
             let phone = mobileNumberTxtField.text ?? ""
@@ -118,14 +117,57 @@ class RegistrationController:UIViewController,UITextFieldDelegate{
        
         
         
-        [firstNameTxtField,lastNameTxtField, mobileNumberTxtField,emailTxtField,passwordTxtField,confirmPasswordTxtField].forEach { textfield in
+        [nameTxtField, mobileNumberTxtField,
+         emailTxtField,passwordTxtField,
+         confirmPasswordTxtField].forEach { textfield in
             makeTextFieldCircular(textField: textfield)
             addLeftPadding(to: textfield, padding: 15)
         }
         makeButtonCircular(button: registerButton)
-        
+        setupPasswordTextField(textField: passwordTxtField)
+        setupPasswordTextField(textField: confirmPasswordTxtField)
         
     }
+    
+    func setupPasswordTextField(textField: UITextField) {
+        // Create a UIButton for the eye icon
+        let eyeButton = UIButton(type: .custom)
+        eyeButton.tintColor = .gray
+        eyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        eyeButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        
+      
+     //   eyeButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+        
+        
+    
+        textField.rightView = eyeButton
+        textField.rightViewMode = .always
+        textField.isSecureTextEntry = true
+    }
+
+    
+//    @objc func togglePasswordVisibility() {
+//        // Toggle the secure text entry
+//        isPasswordVisible.toggle()
+//        
+//        if isPasswordVisible {
+//            passWordTextField.isSecureTextEntry = false
+//            
+//            
+//            if let eyeButton = passWordTextField.rightView?.subviews.first as? UIButton {
+//                eyeButton.setImage(UIImage(systemName:  "eye"), for: .normal)  // Open eye icon
+//            }
+//        } else {
+//            passWordTextField.isSecureTextEntry = true
+//            
+//            if let eyeButton = passWordTextField.rightView?.subviews.first as? UIButton {
+//                eyeButton.setImage(UIImage(systemName:  "eye.slash"), for: .normal)  // Closed eye icon
+//            }
+//        }
+//    }
+    
+    
     func makeTextFieldCircular(textField: UITextField) {
         textField.layer.cornerRadius = textField.frame.size.height / 2  // Circular shape
         textField.layer.borderWidth = 0

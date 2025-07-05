@@ -10,7 +10,7 @@ class Settings:UIViewController,UITableViewDelegate,UITableViewDataSource{
     var storedEmail :String = ""
     //UITableView
     @IBOutlet weak var SettingTableView: UITableView!
-    var updateDetails = RegistrationDataBase()
+   
    // settingUILabel
     let settingLabel:[String] = ["Change Password","Change Email", "About Us","Delete Acount"]
     let settingImage: [UIImage] = [UIImage(named: "password1")!,
@@ -53,7 +53,6 @@ class Settings:UIViewController,UITableViewDelegate,UITableViewDataSource{
                 }
                 
                 else{
-            self?.updateDetails.updatePassword(oldPassword: self!.storedEmail, newPassword: text)
                     UserDefaults.standard.set(false, forKey: "isLogin")
                     UserDefaults.standard.removeObject(forKey: "userEmail")
                     let LoginController = (self?.storyboard!.instantiateViewController(identifier: "LoginController"))! as LoginController
@@ -91,7 +90,7 @@ class Settings:UIViewController,UITableViewDelegate,UITableViewDataSource{
                    }
                    
                    else{
-                       self?.updateDetails.updateEmail(oldEmail: self!.storedEmail, newEmail: text)
+                    
                        UserDefaults.standard.set(false, forKey: "isLogin")
                        UserDefaults.standard.removeObject(forKey: "userEmail")
                        let LoginController = (self?.storyboard!.instantiateViewController(identifier: "LoginController"))! as LoginController

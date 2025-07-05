@@ -93,7 +93,7 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
 
         recommendedLayout.itemSize = CGSize(width: recommendedItemWidth, height: recommendedItemWidth * 1.1)
         recommendedLayout.minimumInteritemSpacing = recommendedSpacing
-        recommendedLayout.minimumLineSpacing = recommendedSpacing
+        recommendedLayout.minimumLineSpacing = 15
         recommendedLayout.scrollDirection = .vertical
 
         productItemsClnView.collectionViewLayout = recommendedLayout
@@ -125,6 +125,20 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
              let cell = productItemsClnView.dequeueReusableCell(withReuseIdentifier: "ProductItemsCollectionViewCell", for: indexPath) as! ProductItemsCollectionViewCell
              cell.productNameLabel.text = productData?.data?.products?[indexPath.row].prdName ?? "-"
              cell.productPriceLabel.text = productData?.data?.products?[indexPath.row].sellingPrice ?? "-"
+             
+             if let logo = productData?.data?.products?[indexPath.row].firstImage?.replacingOccurrences(of: "\\", with: "/") {
+                 let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
+                 UIImage.fetchImage(from: logo,baseURL: baseurl) { image in
+                     DispatchQueue.main.async {
+                         if let fetchedImage = image {
+                             cell.productImage.image = fetchedImage
+                         } else {
+                             print("No image fetched for:", logo)
+                         }
+                     }
+                 }
+             }
+             
              return cell
          }
          return UICollectionViewCell()

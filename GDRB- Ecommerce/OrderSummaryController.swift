@@ -8,10 +8,9 @@
 import UIKit
 import Razorpay
 class OrderSummaryController:UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,RazorpayPaymentCompletionProtocol{
-    var retriveCart = CartDataBaseScreen()
-    var cartDetails:[CartDetails] = []
-    var orderDetails:[MyOrdersDetails] = []
-    var retriveOrders = MyOrdersDataBase()
+    
+ 
+
     
     
     var razorpay:RazorpayCheckout!
@@ -22,17 +21,7 @@ class OrderSummaryController:UIViewController,UICollectionViewDelegate,UICollect
         }
 
     func onPaymentSuccess(_ payment_id: String) {
-        print("success: ", payment_id)
-        for data in cartDetails {
-            retriveOrders.insert(productname: data.productname, productprice: data.productprice, productcategory: data.productcategory, productDiscription: data.productDiscription, productRating: data.productRating, image: data.image)
-        }
-        retriveCart.deleteByName()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let navigationcontroller = (self.storyboard?.instantiateViewController(identifier: "MyOrdersViewController"))!
-            self.navigationController?.pushViewController(navigationcontroller, animated: true)
-            
-        }
+
     }
   
     var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -134,9 +123,7 @@ class OrderSummaryController:UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var OrderedCollectionViewCell: UICollectionView!
     
     override func viewDidLoad() {
-        cartDetails = retriveCart.retrieveProductsDetails()
-
-       print(cartDetails)
+      
         
         itemsAmtLabel.text = "\(rupeeSymbol)\(Int(total ?? 0))"
         let tax = 17

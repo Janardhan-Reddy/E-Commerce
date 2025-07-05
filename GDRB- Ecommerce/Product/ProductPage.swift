@@ -13,9 +13,7 @@ class ProductPage:UIViewController{
     var productCategory:String?
     var Description:String?
     var rating:String?
-    var retriveData:CartDataBaseScreen = CartDataBaseScreen()
-    var products:[CartDetails] = []
-    var insertData = WishListDataBase()
+ 
 
     @IBOutlet weak var ScrollProductPage: UIScrollView!
     
@@ -25,7 +23,7 @@ class ProductPage:UIViewController{
     @IBOutlet weak var productPriceLabel: UILabel!
     
     @IBOutlet weak var descriptionLabel: UILabel!
-    let cartInsertDetails = CartDataBaseScreen()
+   
     let RecentPageController = UIPageControl()
     
     let ProductImage:[String] = ["mobile","mobile2","mobile9","mobile8","mobile3"]
@@ -38,7 +36,7 @@ class ProductPage:UIViewController{
    
   
     @IBAction func Favourite(_ sender: Any) {
-        insertData.insert(productname: productName ?? "nil", productprice: price ?? "nil", productcategory: productCategory ?? "nil", productDiscription: Description ?? "nil", productRating: rating ?? "nil", image: image!)
+      
      }
     @objc func favoriteButtonTapped() {
         FavouriteButton.isSelected.toggle()
@@ -53,7 +51,7 @@ class ProductPage:UIViewController{
     }
     //cartButtonAction
     @IBAction func cartAction(_ sender: Any) {
-        cartInsertDetails.insert(productname: productName ?? "nil", productprice: price ?? "nil", productcategory: productCategory ?? "nil", productDiscription: Description ?? "nil", productRating: rating ?? "nil", image: image!)
+      
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let CartViewController = storyboard.instantiateViewController(identifier: "CartViewController") as CartViewController
        

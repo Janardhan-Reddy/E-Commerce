@@ -15,9 +15,7 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
     var menu: SideMenuNavigationController?
     
     
-    var retriveData:HomeProductDataBase = HomeProductDataBase()
     
-    var products:[HomeProductDetails] = []
     var viewModel : HomeViewModel = HomeViewModel()
     
     var topoffers: [TopOffer]?
@@ -285,7 +283,8 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
              
              
              if let logo = collections?[indexPath.row].image_path?.replacingOccurrences(of: "\\", with: "/") {
-                 UIImage.fetchImage(from: logo) { image in
+                 let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
+                 UIImage.fetchImage(from: logo,baseURL: baseurl) { image in
                      DispatchQueue.main.async {
                          if let fetchedImage = image {
                              cell.CategoryImage.image = fetchedImage
@@ -302,7 +301,8 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         } else if collectionView == self.topOffersClnView {
             let cell3 = topOffersClnView.dequeueReusableCell(withReuseIdentifier: "SeasonSaleCollectionViewCell", for: indexPath) as! SeasonSaleCollectionViewCell
             if let logo = topoffers?[indexPath.row].image_path?.replacingOccurrences(of: "\\", with: "/") {
-                UIImage.fetchImage(from: logo) { image in
+                let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
+                UIImage.fetchImage(from: logo,baseURL: baseurl) { image in
                     DispatchQueue.main.async {
                         if let fetchedImage = image {
                             cell3.saleMainIMG.image = fetchedImage
