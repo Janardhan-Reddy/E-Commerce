@@ -19,8 +19,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     override func viewDidLoad() {
         self.title = "My Cart"
         
-        
-        
+        self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .red, titleColor: .white)
         let rupeeSymbol = "\u{20B9}"
         let balanceString = String(format: NSLocalizedString("Total Amount: \(rupeeSymbol) %.2f", comment: ""), totalSum)
         self.totlaAmt.text = balanceString
@@ -29,11 +28,18 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
         CartTableView.register(UINib(nibName: "CartCustomeCell", bundle: nil), forCellReuseIdentifier: "CartCustomeCell")
         // self.tabBarController?.navigationItem.hidesBackButton = false
         
-        loadCartItems()
+       
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        loadCartItems()
+    }
+    
+    
+    
     private func loadCartItems(){
+        LoadingView.shared.show()
         viewModel.loadCartData { response, error in
             guard error == nil else {
                 return
@@ -41,6 +47,8 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
             
             self.cartModelResponse = response
             DispatchQueue.main.async {
+                LoadingView.shared.hide()
+                self.recalculateTotal()
                 self.CartTableView.reloadData()
             }
             
@@ -65,7 +73,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
 
         // Set product name and price
         cell.CartProductLabel.text = product?.prdName ?? "-"
-        let price = product?.sellingPrice ?? "-"
+        let price = product?.prdPrice ?? "-"
         cell.CartPriceLabel.text = "\u{20B9} \(price)"
 
         // Load image
@@ -88,7 +96,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
             )
             
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
-                if let id = item?.id {
+                if let id = item?.card_id {
                     self.deleteItem(for: String(id)) {
                         self.loadCartItems()
                     }
@@ -105,12 +113,14 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
         return cell
     }
     func deleteItem(for id: String, completion: @escaping () -> Void) {
+        LoadingView.shared.show()
         viewModel.deleteRecord(Id: id) { [weak self] deleteResponse, error in
             guard let self = self else { return }
             guard error == nil, deleteResponse?.status == true else { return }
 
             DispatchQueue.main.async {
                 self.recalculateTotal()
+                LoadingView.shared.hide()
                 completion()
             }
         }
@@ -119,7 +129,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     func recalculateTotal() {
         let rupeeSymbol = "\u{20B9}"
         let total = cartModelResponse?.cartItems?.reduce(0.0) { partialResult, item in
-            let price = Double(item.product?.sellingPrice ?? "") ?? 0
+            let price = Double(item.product?.prdPrice ?? "") ?? 0
             return partialResult + price
         } ?? 0.0
 
@@ -137,7 +147,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 100
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

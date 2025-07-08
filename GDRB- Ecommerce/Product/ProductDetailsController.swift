@@ -19,16 +19,16 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
     var allProducts: [Product] = []
     var filteredProducts: [Product] = []
 
-    
+    var SelectedIndex: IndexPath?
 
     
     @IBOutlet weak var topNavItemCategories: UICollectionView!
     
     @IBOutlet weak var productItemsClnView: UICollectionView!
     
-    @IBOutlet weak var productClnViewHeight: NSLayoutConstraint!
     
     private func loadProducts(productCaregoryname: String){
+        LoadingView.shared.show()
         viewModel.getProduct(productName: productCaregoryname) { productDataResponse, error in
             guard  error == nil else{
                 return
@@ -40,12 +40,9 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
                 self.allProducts = productDataResponse.data?.products ?? []
                   self.filteredProducts = self.allProducts
                 
-                let productCount = self.filteredProducts.count
-                let cellHeight: CGFloat = 220
-                let rows = ceil(CGFloat(productCount) / 2.0)
+             
                 DispatchQueue.main.async {
-                    self.productClnViewHeight.constant = rows * cellHeight
-                    self.view.layoutIfNeeded()
+                    LoadingView.shared.hide()
                     self.topNavItemCategories.reloadData()
                     self.productItemsClnView.reloadData()
                 }
@@ -73,8 +70,9 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
         }
         setupRecommededFlowLayout()
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 120) // adjust to fit
+        layout.itemSize = CGSize(width: 80, height: 80) 
         layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 3
         topNavItemCategories.collectionViewLayout = layout
         
         
@@ -85,15 +83,15 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
         let recommendedLayout = UICollectionViewFlowLayout()
 
         let recommendedItemsPerRow: CGFloat = 2
-        let recommendedSpacing: CGFloat = 5
+        let recommendedSpacing: CGFloat = 8
 
         let totalSpacing = (recommendedItemsPerRow - 1) * recommendedSpacing
         let collectionViewWidth = productItemsClnView.bounds.width
         let recommendedItemWidth = (collectionViewWidth - totalSpacing) / recommendedItemsPerRow
 
-        recommendedLayout.itemSize = CGSize(width: recommendedItemWidth, height: recommendedItemWidth * 1.1)
+        recommendedLayout.itemSize = CGSize(width: recommendedItemWidth, height: recommendedItemWidth * 1.3)
         recommendedLayout.minimumInteritemSpacing = recommendedSpacing
-        recommendedLayout.minimumLineSpacing = 15
+        recommendedLayout.minimumLineSpacing = 8
         recommendedLayout.scrollDirection = .vertical
 
         productItemsClnView.collectionViewLayout = recommendedLayout
@@ -118,15 +116,26 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
          if collectionView == topNavItemCategories{
              let cell = topNavItemCategories.dequeueReusableCell(withReuseIdentifier: "ProductCategortCollectionViewCell", for: indexPath) as! ProductCategortCollectionViewCell
              
-             cell.productNameLabel.text = productData?.navbarHeadings?[indexPath.row].subName ?? "-"
+             cell.productNameLabel.text = productData?.navbarHeadings?[indexPath.row].subName?.capitalized ?? "-"
+             if SelectedIndex == indexPath {
+                 cell.productNameLabel.font = UIFont.systemFont(ofSize: 13)
+                 cell.productNameLabel.textColor = .red
+             }else{
+                 cell.productNameLabel.font = UIFont.systemFont(ofSize: 11)
+                 cell.productNameLabel.textColor = .black
+             }
              
              return cell
          }else if collectionView == productItemsClnView{
              let cell = productItemsClnView.dequeueReusableCell(withReuseIdentifier: "ProductItemsCollectionViewCell", for: indexPath) as! ProductItemsCollectionViewCell
-             cell.productNameLabel.text = productData?.data?.products?[indexPath.row].prdName ?? "-"
-             cell.productPriceLabel.text = productData?.data?.products?[indexPath.row].sellingPrice ?? "-"
+             cell.productNameLabel.text = filteredProducts[indexPath.row].prdName ?? "-"
              
-             if let logo = productData?.data?.products?[indexPath.row].firstImage?.replacingOccurrences(of: "\\", with: "/") {
+             let rupeeSymbol = "\u{20B9}"
+             let price = filteredProducts[indexPath.row].prdPrice ?? "-"
+             cell.productPriceLabel.text = "Price: \(rupeeSymbol)\(price)"
+           
+             
+             if let logo = filteredProducts[indexPath.row].firstImage?.replacingOccurrences(of: "\\", with: "/") {
                  let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
                  UIImage.fetchImage(from: logo,baseURL: baseurl) { image in
                      DispatchQueue.main.async {
@@ -146,6 +155,7 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == topNavItemCategories {
+            SelectedIndex = indexPath
             guard let selectedSubName = productData?.navbarHeadings?[indexPath.row].subName?.lowercased(),
             let mainCategory = TitleName?.lowercased() else { return }
 
@@ -165,17 +175,17 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
             }
 
             // Recalculate dynamic height
-            let productCount = filteredProducts.count
-            let cellHeight: CGFloat = 220
-            let rows = ceil(CGFloat(productCount) / 2.0)
+          
 
             DispatchQueue.main.async {
-                self.productClnViewHeight.constant = rows * cellHeight
-                self.view.layoutIfNeeded()
+                self.topNavItemCategories.reloadData()
                 self.productItemsClnView.reloadData()
             }
         } else if collectionView == productItemsClnView {
-           
+            let vc = storyboard?.instantiateViewController(withIdentifier: "EachItemVc") as! EachItemVc
+            vc.eachItemData = productData?.data?.products?[indexPath.row]
+            vc.similarProductData = productData?.data
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 
@@ -256,4 +266,21 @@ class ProductItemsCollectionViewCell: UICollectionViewCell{
     
     @IBOutlet weak var productPriceLabel: UILabel!
     
+}
+
+
+
+extension UIViewController {
+    func setNavigationBarColors(backgroundColor: UIColor, titleColor: UIColor, tintColor: UIColor = .white) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = backgroundColor
+        appearance.titleTextAttributes = [.foregroundColor: titleColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: titleColor]
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.tintColor = tintColor
+    }
 }

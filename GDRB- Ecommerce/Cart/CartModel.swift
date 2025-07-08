@@ -20,7 +20,7 @@ struct CartResponse: Decodable {
 }
 
 struct CartItem: Decodable {
-    let id: Int?
+    let card_id: Int?
     let userId: Int?
     let prdId: Int?
     let quantity: Int?
@@ -29,7 +29,7 @@ struct CartItem: Decodable {
     let product: CartProduct?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case card_id = "card_id"
         case userId = "user_id"
         case prdId = "prd_id"
         case quantity

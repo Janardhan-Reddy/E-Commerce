@@ -62,6 +62,7 @@ class RegistrationController:UIViewController,UITextFieldDelegate{
             let password = passwordTxtField.text ?? ""
             let phone = mobileNumberTxtField.text ?? ""
             let registerModel = RegistrationDetails(name: name, email: emailId,password: password, confirmPassword: password, phoneNumber: phone )
+        LoadingView.shared.show()
             viewModel.registerUser(registeration: registerModel) { regResponse, error in
                 guard error == nil else{
                     self.showAlert(message: error?.localizedDescription ?? "")
@@ -77,6 +78,7 @@ class RegistrationController:UIViewController,UITextFieldDelegate{
                 }
                 
                 self.regResponse = regResponse
+                LoadingView.shared.hide()
             }
         
 

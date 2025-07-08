@@ -27,7 +27,7 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     private init() {}
-
+ 
     func request<T: Decodable>(
         urlString: String,
         method: HTTPMethod = .GET,
@@ -41,8 +41,6 @@ final class NetworkManager {
             return
         }
 
-        var request: URLRequest
-
         if method == .GET, let parameters = parameters {
             urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
         }
@@ -52,9 +50,9 @@ final class NetworkManager {
             return
         }
 
-        request = URLRequest(url: url)
+        var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        
+
         if method != .GET, let parameters = parameters {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
@@ -72,14 +70,12 @@ final class NetworkManager {
         }
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-
             if let error = error {
                 completion(.failure(.requestFailed(error)))
                 return
             }
 
             guard let httpResponse = response as? HTTPURLResponse,
-                  200..<300 ~= httpResponse.statusCode,
                   let data = data else {
                 completion(.failure(.invalidResponse))
                 return
@@ -87,7 +83,12 @@ final class NetworkManager {
 
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decoded))
+
+                if 200..<300 ~= httpResponse.statusCode {
+                    completion(.success(decoded))
+                } else {
+                    completion(.success(decoded))
+                }
             } catch {
                 completion(.failure(.decodingFailed(error)))
             }
@@ -95,4 +96,5 @@ final class NetworkManager {
 
         task.resume()
     }
+
 }

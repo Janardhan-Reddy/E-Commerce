@@ -59,6 +59,10 @@
 		576A89C32E12AC1E0016D94D /* RecomandedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 576A89C12E12AC1E0016D94D /* RecomandedCollectionViewCell.xib */; };
 		577CC82D2E17925100F358B8 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577CC82C2E17925100F358B8 /* ProductViewModel.swift */; };
 		577CC82F2E17930400F358B8 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577CC82E2E17930000F358B8 /* ProductModel.swift */; };
+		57BAD7002E1CE34D0097B021 /* EachItemVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BAD6FF2E1CE3440097B021 /* EachItemVc.swift */; };
+		57BAD7022E1D242C0097B021 /* EachItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BAD7012E1D24260097B021 /* EachItemViewModel.swift */; };
+		57BAD7042E1D45A00097B021 /* CustomLoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BAD7032E1D45970097B021 /* CustomLoadingScreen.swift */; };
+		57BAD7062E1D4FE20097B021 /* CustomToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BAD7052E1D4FDD0097B021 /* CustomToast.swift */; };
 		57BAF7442E13A8E00034BF60 /* BannerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BAF7432E13A8DA0034BF60 /* BannerCollectionView.swift */; };
 		57BAF7482E13AA350034BF60 /* BannnerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BAF7452E13AA340034BF60 /* BannnerCollectionViewCell.swift */; };
 		57BAF7492E13AA350034BF60 /* BannnerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57BAF7462E13AA340034BF60 /* BannnerCollectionViewCell.xib */; };
@@ -165,6 +169,10 @@
 		576A89C12E12AC1E0016D94D /* RecomandedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecomandedCollectionViewCell.xib; sourceTree = "<group>"; };
 		577CC82C2E17925100F358B8 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		577CC82E2E17930000F358B8 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		57BAD6FF2E1CE3440097B021 /* EachItemVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachItemVc.swift; sourceTree = "<group>"; };
+		57BAD7012E1D24260097B021 /* EachItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachItemViewModel.swift; sourceTree = "<group>"; };
+		57BAD7032E1D45970097B021 /* CustomLoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoadingScreen.swift; sourceTree = "<group>"; };
+		57BAD7052E1D4FDD0097B021 /* CustomToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToast.swift; sourceTree = "<group>"; };
 		57BAF7432E13A8DA0034BF60 /* BannerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionView.swift; sourceTree = "<group>"; };
 		57BAF7452E13AA340034BF60 /* BannnerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannnerCollectionViewCell.swift; sourceTree = "<group>"; };
 		57BAF7462E13AA340034BF60 /* BannnerCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannnerCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -258,6 +266,8 @@
 				22CAC5BD291CC0B500F9EFFF /* SceneDelegate.swift */,
 				57B9EE9F2E18089A002FA6A6 /* Managers */,
 				22BFE153295170980066B035 /* SideMenuController.swift */,
+				57BAD7032E1D45970097B021 /* CustomLoadingScreen.swift */,
+				57BAD7052E1D4FDD0097B021 /* CustomToast.swift */,
 				57B9EEA02E1808B8002FA6A6 /* LoginVcs */,
 				57B9EEA12E1808DB002FA6A6 /* Home */,
 				57B9EEA42E181032002FA6A6 /* Cart */,
@@ -415,6 +425,8 @@
 			children = (
 				2206DCC0292E570500CA4946 /* ProductCollectionViewCell.swift */,
 				22C321E52933B6D10096154F /* ProductDetailsController.swift */,
+				57BAD6FF2E1CE3440097B021 /* EachItemVc.swift */,
+				57BAD7012E1D24260097B021 /* EachItemViewModel.swift */,
 				577CC82C2E17925100F358B8 /* ProductViewModel.swift */,
 				577CC82E2E17930000F358B8 /* ProductModel.swift */,
 				2206DCBE292E501300CA4946 /* ProductPage.swift */,
@@ -688,6 +700,7 @@
 			files = (
 				22AF91F92A6E424A00C26CB6 /* WishList.swift in Sources */,
 				57C4DCE22E0E6D85003FC252 /* ForgotPasswordVC.swift in Sources */,
+				57BAD7042E1D45A00097B021 /* CustomLoadingScreen.swift in Sources */,
 				22CAC5C0291CC0B500F9EFFF /* VCManager.swift in Sources */,
 				22AB348F2928A94700ABBCD4 /* HomeSecondCollectionViewCell.swift in Sources */,
 				2206DCC1292E570500CA4946 /* ProductCollectionViewCell.swift in Sources */,
@@ -700,6 +713,7 @@
 				22CAC5F2291CCD4C00F9EFFF /* CartViewController.swift in Sources */,
 				576A89BB2E129E070016D94D /* SeasonSaleCollectionViewCell.swift in Sources */,
 				57BAF74B2E13BD850034BF60 /* HomeViewModel.swift in Sources */,
+				57BAD7002E1CE34D0097B021 /* EachItemVc.swift in Sources */,
 				22CAC5F4291CCD7200F9EFFF /* MyOrdersViewController.swift in Sources */,
 				576A89C22E12AC1E0016D94D /* RecomandedCollectionViewCell.swift in Sources */,
 				22CAC5EC291CC7E300F9EFFF /* RegistrationController.swift in Sources */,
@@ -712,6 +726,7 @@
 				22AB34912928A96B00ABBCD4 /* HomeThirdCollectionViewCell.swift in Sources */,
 				57C4DCE62E0ED2D2003FC252 /* ResetPasswordVC.swift in Sources */,
 				22A932E8294345B000ABB917 /* SettingsTableViewCell.swift in Sources */,
+				57BAD7022E1D242C0097B021 /* EachItemViewModel.swift in Sources */,
 				22CAC5BE291CC0B500F9EFFF /* SceneDelegate.swift in Sources */,
 				22708EFD2934A1DF00EBC06B /* MyordersCustomeCell.swift in Sources */,
 				22AB348D2928936C00ABBCD4 /* HomeCollectionViewCell.swift in Sources */,
@@ -725,6 +740,7 @@
 				2278D7A229347CB3002C0D19 /* CustomeOrderSummary.swift in Sources */,
 				22C79F28293F58C700B97696 /* DeliveryAddress.swift in Sources */,
 				574619042E0D5E0700828D2F /* OnBoardingScreen.swift in Sources */,
+				57BAD7062E1D4FE20097B021 /* CustomToast.swift in Sources */,
 				22CAC5EE291CC7F900F9EFFF /* LoginController.swift in Sources */,
 				573237672E13EA8C00654AF5 /* ImageDownloader.swift in Sources */,
 				57BF27FC2E167306009B0CA5 /* RegisterViewModel.swift in Sources */,

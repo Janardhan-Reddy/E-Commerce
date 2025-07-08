@@ -43,7 +43,7 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
       bannerImages = Array<UIImage?>(repeating: nil, count: count)
       DispatchQueue.main.async {
         self.controller.topPagination.numberOfPages = count
-        self.controller.bottomPagination.numberOfPages = count
+      
         self.reloadData()
       }
 
@@ -94,7 +94,6 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         }
         
         controller.topPagination.currentPage = currentCellIndex
-        controller.bottomPagination.currentPage = currentCellIndex
     }
 
     
@@ -106,7 +105,6 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         // Make sure we only update pagination if the page index has changed
         if pageIndex != controller.topPagination.currentPage {
             controller.topPagination.currentPage = pageIndex
-            controller.bottomPagination.currentPage = pageIndex
         }
         
       
@@ -136,7 +134,6 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         // update your index & pagers
         currentCellIndex = Int(nextPage)
         controller.topPagination.currentPage = currentCellIndex
-        controller.bottomPagination.currentPage = currentCellIndex
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -153,7 +150,6 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         // Update current index when scrolling ends
         currentCellIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
         controller.topPagination.currentPage = currentCellIndex
-        controller.bottomPagination.currentPage = currentCellIndex
     }
 
     

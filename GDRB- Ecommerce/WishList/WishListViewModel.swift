@@ -71,13 +71,13 @@ struct WishListResponse: Decodable {
     let message: String?
     let status: Bool?
     let itemCount: Int?
-    let cartItems: [CartItem]?
+    let wishListItems: [WishlistItem]?
 
     enum CodingKeys: String, CodingKey {
         case message
         case status
         case itemCount = "item-count"
-        case cartItems = "wishlist-items"
+        case wishListItems = "wishlist-items"
     }
 }
 

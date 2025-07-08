@@ -81,15 +81,8 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
     }
    
     
-    @IBOutlet weak var bottomPagination: UIPageControl!
     
-  
-    
-    @IBOutlet weak var bottomBannerView: BannerCollectionView!{
-        didSet{
-            bottomBannerView.loadConnectionView(inController: self)
-        }
-    }
+
     
     @IBOutlet weak var recommendedCollectionView: UICollectionView!{
         didSet{
@@ -178,7 +171,7 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
         
         setupRecommededFlowLayout()
         fetchHomePageContent()
-        
+        self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .blue, titleColor: .white)
                 
         self.title  = "Home"
         //insert Data of HomeCategoryDataBase
@@ -217,6 +210,7 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
     }
     
     private func fetchHomePageContent(){
+        LoadingView.shared.show()
         viewModel.loadHomePageItems { homeResponse, error in
             if let response = homeResponse{
                 if let topOffers = response.topoffers{
@@ -226,10 +220,8 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
                     if let banners = response.banners{
                         self.banners = banners
                         self.topBannerClnView.loadData(banners: banners)
-                        self.bottomBannerView.loadData(banners: banners)
-                        
                       
-                        
+
                     }
                     let productCount = topOffers.count
                     let cellHeight: CGFloat = 160
@@ -240,6 +232,11 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
                         self.view.layoutIfNeeded()
                         self.topOffersClnView.reloadData()
                         self.ProductCategoryClnView.reloadData()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            LoadingView.shared.hide()
+                        }
+
+                       
                     }
                     
                 }
@@ -281,6 +278,7 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
          if collectionView == self.ProductCategoryClnView {
             let cell = ProductCategoryClnView.dequeueReusableCell(withReuseIdentifier: "SecondCollectionViewCell", for: indexPath) as! SecondCollectionViewCell
              
+             cell.CategoryImage.image = UIImage(systemName: "photo")?.withTintColor(UIColor(named: "DefaultBlue") ?? .blue)
              
              if let logo = collections?[indexPath.row].image_path?.replacingOccurrences(of: "\\", with: "/") {
                  let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
@@ -300,6 +298,7 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
             return cell
         } else if collectionView == self.topOffersClnView {
             let cell3 = topOffersClnView.dequeueReusableCell(withReuseIdentifier: "SeasonSaleCollectionViewCell", for: indexPath) as! SeasonSaleCollectionViewCell
+            cell3.saleMainIMG.image = UIImage(systemName: "photo")?.withTintColor(UIColor(named: "DefaultBlue") ?? .blue)
             if let logo = topoffers?[indexPath.row].image_path?.replacingOccurrences(of: "\\", with: "/") {
                 let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
                 UIImage.fetchImage(from: logo,baseURL: baseurl) { image in
