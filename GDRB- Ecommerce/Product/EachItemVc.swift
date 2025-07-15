@@ -75,6 +75,9 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
 
        @IBAction func buyNowPressed(_ sender: UIButton) {
            // Implement your Buy Now logic here
+           let vc = storyboard?.instantiateViewController(withIdentifier: "BillingVC") as! BillingVC
+           vc.billableItem = BillingModel(productImage: eachItemData?.firstImage,productName: eachItemData?.prdName, productPrice: eachItemData?.sellingPrice )
+           self.navigationController?.pushViewController(vc, animated: true)
        }
 
        @IBAction func onWishListPressed(_ sender: UIButton) {
