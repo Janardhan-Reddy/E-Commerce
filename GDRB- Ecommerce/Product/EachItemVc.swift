@@ -12,13 +12,21 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var similarProductData: ProductsData?
     var viewModel = EachItemViewModel()
     @IBOutlet weak var imagePreviewCollectionview: UICollectionView!
+    @IBOutlet weak var imagePreviewPagination: UIPageControl!
+    
     @IBOutlet weak var ProductName: UILabel!
     @IBOutlet weak var productPrice: UILabel!
-    @IBOutlet weak var offersandCoupons: UILabel!
-    @IBOutlet weak var descriptionHeader: UILabel!
     @IBOutlet weak var descriptionTxt: UILabel!
-    @IBOutlet weak var similarProductsCollectionView: UICollectionView!
 
+    
+    @IBOutlet weak var similarProductsCollectionView: UICollectionView!
+    
+    @IBOutlet weak var colourOptionsClnView: UICollectionView!
+    
+    
+    @IBOutlet weak var addtoCartBtn: UIButton!
+    
+    @IBOutlet weak var buyNowBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +34,38 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         imagePreviewCollectionview.dataSource = self
         similarProductsCollectionView.delegate = self
         similarProductsCollectionView.dataSource = self
+        colourOptionsClnView.delegate = self
+        colourOptionsClnView.dataSource = self
+        
+        // MARK: - Add to Cart Button
+        addtoCartBtn.clipsToBounds = true
+        addtoCartBtn.layer.cornerRadius = 15
+        addtoCartBtn.layer.borderWidth = 1
+        addtoCartBtn.layer.borderColor = UIColor(named: "DefaultBlue")?.cgColor
+
+        // MARK: - Buy Now Button
+        buyNowBtn.clipsToBounds = true
+        buyNowBtn.layer.cornerRadius = 15
+        buyNowBtn.layer.borderWidth = 1
+        buyNowBtn.layer.borderColor = UIColor.clear.cgColor
+
+        
         imagePreviewCollectionview.isPagingEnabled = true
         ProductName.text = eachItemData?.prdName ?? "-"
         let rupeeSymbol = "\u{20B9}"
         let price = eachItemData?.prdPrice ?? "-"
-        productPrice.text = "Price: \(rupeeSymbol)\(price)"
-        
-        descriptionTxt.text = eachItemData?.prdDescription ?? "-"
+        productPrice.text = "\(rupeeSymbol)\(price)"
+        imagePreviewPagination.numberOfPages = eachItemData?.images?.count ?? 0
+
+       // descriptionTxt.text = eachItemData?.prdDescription ?? "-"
         similarProductsCollectionView.isPagingEnabled = true
         setupLayoutForSimilarProductView()
         setupRecommededFlowLayout()
-        setupLayoutForSimilarProductView()
-        
+        setupLayoutForColorOptionsClnView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            
+            self?.similarProductsCollectionView.reloadData()
+        }
     }
     
     
@@ -123,14 +151,36 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         similarProductsCollectionView.collectionViewLayout = layout
         similarProductsCollectionView.showsHorizontalScrollIndicator = false
     }
+    
+    func setupLayoutForColorOptionsClnView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 3
+        layout.minimumInteritemSpacing = 3
+
+        let numberOfItemsInRow: CGFloat = 2
+        let spacing: CGFloat = layout.minimumInteritemSpacing * (numberOfItemsInRow - 1)
+        let width = colourOptionsClnView.bounds.width
+        let height = colourOptionsClnView.bounds.height
+
+        let cellWidth = (width - spacing) / numberOfItemsInRow
+        layout.itemSize = CGSize(width: cellWidth, height: height)
+
+        colourOptionsClnView.collectionViewLayout = layout
+        colourOptionsClnView.showsHorizontalScrollIndicator = false
+    }
+
 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == imagePreviewCollectionview {
             return eachItemData?.images?.count ?? 0
-              } else {
+        } else if collectionView == similarProductsCollectionView{
                   return similarProductData?.products?.count ?? 0
-              }
+        }else if collectionView == colourOptionsClnView {
+            return 2
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -145,7 +195,7 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                        }
                    }
                    return cell
-               } else {
+               } else if collectionView == similarProductsCollectionView {
                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimilarProductsClnViewCell", for: indexPath) as! SimilarProductsClnViewCell
 
                    let product = similarProductData?.products?[indexPath.row]
@@ -160,9 +210,24 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                    
                    let rupeeSymbol = "\u{20B9}"
                    let price = product?.prdPrice ?? "-"
-                   cell.itemPrice.text = "Price: \(rupeeSymbol)\(price)"
+                   cell.itemPrice.text = "\(rupeeSymbol)\(price)"
                    
                    return cell
+               }else if collectionView == colourOptionsClnView{
+                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorOptionsClnViewCell", for: indexPath) as! ColorOptionsClnViewCell
+                   
+                   cell.imageView.image = UIImage(systemName: "laptopcomputer")
+                   
+                   cell.itemColor.text = indexPath.row == 0 ? "Grey" : "Artic Grey"
+                   
+                   cell.actualPrice.text = "₹45000"
+                   
+                   cell.originalPrice.setStrikethroughPrice("₹76000")
+                   
+                 
+                   return cell
+               }else{
+                   return UICollectionViewCell()
                }
         
     }
@@ -174,15 +239,20 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 self.ProductName.text = self.eachItemData?.prdName ?? "-"
                 let rupeeSymbol = "\u{20B9}"
                 let price = self.eachItemData?.prdPrice ?? "-"
-                self.productPrice.text = "Price: \(rupeeSymbol)\(price)"
-                self.descriptionTxt.text = self.eachItemData?.prdDescription ?? "-"
+                self.productPrice.text = "\(rupeeSymbol)\(price)"
+                //self.descriptionTxt.text = //self.eachItemData?.prdDescription ?? "-"
                 self.imagePreviewCollectionview.reloadData()
             }
             
             
         }
     }
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == imagePreviewCollectionview {
+            let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
+            imagePreviewPagination.currentPage = Int(pageIndex)
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -222,4 +292,19 @@ class SimilarProductsClnViewCell: UICollectionViewCell{
     @IBOutlet weak var itemName: UILabel!
     
     @IBOutlet weak var itemPrice: UILabel!
+}
+class ColorOptionsClnViewCell: UICollectionViewCell{
+    
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var itemColor: UILabel!
+    
+    @IBOutlet weak var actualPrice: UILabel!
+    
+    @IBOutlet weak var originalPrice: UILabel!
+    
+    @IBOutlet weak var inStockLabel: UILabel!
+    
+    
 }

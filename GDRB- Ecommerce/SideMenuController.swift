@@ -38,24 +38,64 @@ class MenuListController:UITableViewController{
         
     }
     override func viewDidLoad() {
-        //UIImageView
-        let cellImage = UIImageView(frame: CGRect(x: 40, y: -54, width: 25, height: 25))
-        cellImage.image = UIImage(named: "image")
-        self.view.addSubview(cellImage)
-        //UILabel
-        let label  = UILabel(frame: CGRect(x: 70, y: -54, width: 100, height: 25))
-        label.text = "Welcome!"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        self.view.addSubview(label)
-        
-        
         super.viewDidLoad()
-        //tableView
+
+        // Background color
         tableView.backgroundColor = WhiteColor
+
+        // --- Top Profile Section ---
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 100))
+
+        // Name label
+        let nameLabel = UILabel()
+        nameLabel.text = "B Sai Kumar"
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        nameLabel.textColor = .black
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        // Email label
+        let emailLabel = UILabel()
+        emailLabel.text = "bandarisaikumar11225@gmail.com"
+        emailLabel.font = UIFont.systemFont(ofSize: 14)
+        emailLabel.textColor = .darkGray
+        emailLabel.numberOfLines = 0
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        // Profile image
+        let profileImageView = UIImageView(image: UIImage(named: "userAvathar"))
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.cornerRadius = 30
+        profileImageView.clipsToBounds = true
+
+        // Stack for labels
+        let textStack = UIStackView(arrangedSubviews: [nameLabel, emailLabel])
+        textStack.axis = .vertical
+        textStack.spacing = 4
+        textStack.alignment = .leading
+        textStack.translatesAutoresizingMaskIntoConstraints = false
+
+        containerView.addSubview(textStack)
+        containerView.addSubview(profileImageView)
+        tableView.tableHeaderView = containerView
+
+        // Constraints
+        NSLayoutConstraint.activate([
+            profileImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            profileImageView.widthAnchor.constraint(equalToConstant: 60),
+            profileImageView.heightAnchor.constraint(equalToConstant: 60),
+
+            textStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            textStack.trailingAnchor.constraint(lessThanOrEqualTo: profileImageView.leadingAnchor, constant: -16),
+            textStack.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+        ])
+
+        // Table cell reuse
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        
     }
+
+
     //sideMenu element names
     var items = ["Wishlist","My Orders","My Cart","Share App","Settings","Logout"]
     //sideMenu element names of UIImage
@@ -123,9 +163,25 @@ class MenuListController:UITableViewController{
             
         }
         if indexPath == IndexPath(row: 5, section: 0) {
-           let storyboard = UIStoryboard(name: "Main", bundle: nil)
-           let LoginController = storyboard.instantiateViewController(identifier: "LoginController") as LoginController
-           self.navigationController?.pushViewController(LoginController, animated: true)
+            UserDefaults.standard.removeObject(forKey: "authToken")
+               UserDefaults.standard.set(false, forKey: "isLogin")
+
+               // Load Login screen from storyboard
+               let storyboard = UIStoryboard(name: "Main", bundle: nil)
+               let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginController")
+
+               // Set login screen as the rootViewController, removing TabBarController
+               if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                  let window = sceneDelegate.window {
+                   
+                   let nav = UINavigationController(rootViewController: loginVC)
+                   window.rootViewController = nav
+                   window.makeKeyAndVisible()
+                   
+                   // Optional: animation
+                   UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+               }
 
        }
         tableView.deselectRow(at: indexPath, animated: true)

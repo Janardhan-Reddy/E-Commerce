@@ -71,8 +71,19 @@ class LoginController:UIViewController{
                     
                     // Navigate to Home
                     if let homeVC = self?.storyboard?.instantiateViewController(withIdentifier: "Tabbar") {
-                        self?.navigationController?.pushViewController(homeVC, animated: true)
+                        UserDefaults.standard.set(true, forKey: "isLogin")
+                        
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                           let window = sceneDelegate.window {
+                            
+                            window.rootViewController = homeVC
+                            window.makeKeyAndVisible()
+                            
+                            UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+                        }
                     }
+
                     
                 } else {
                     // 4) Login failed – show whatever message the server gave us
@@ -81,12 +92,6 @@ class LoginController:UIViewController{
                 }
             }
         }
-
-        
-        
-        
-        
-               
             
     }
    

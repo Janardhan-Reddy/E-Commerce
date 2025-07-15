@@ -23,14 +23,7 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
 
     var banners: [Banner]?
     
-    @IBOutlet weak var MenuButton: UIButton!
- 
-    //MenuButtonAction
-    @IBAction func MenuAction() {
-        present(menu!,animated: true)
-        
-        
-    }
+
     
     //UIImaageView & UILabels & UIScrollView
     @IBOutlet weak var trackingImageView: UIImageView!
@@ -94,6 +87,9 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
     
     @IBOutlet weak var topOptionsClnViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    
     private func navigationSetup(){
       
         let navigationButton = UIButton(type: .system)
@@ -115,31 +111,11 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
     override func viewDidLoad() {
       
        
-       
-     
-        
-       
-        //Hide navigation bar
-//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//       self.navigationController!.navigationBar.shadowImage = UIImage()
-//        self.navigationController!.navigationBar.isTranslucent = true
-//        navigationItem.setHidesBackButton(true, animated: true)
-//        
-       
-        //uibarbutton item
-        let leftButton = UIBarButtonItem(title: "abc", style: .plain, target: self, action: #selector(HomeViewController.MenuAction))
-        let navigationItem = UINavigationItem()
-        navigationItem.titleView = UIImageView(image: UIImage(named: "menu4"))
-        navigationItem.leftBarButtonItem = leftButton
-        
-        //scroll View
-//        Scroll.translatesAutoresizingMaskIntoConstraints = true
-//        Scroll.showsVerticalScrollIndicator = true
-//        Scroll.alwaysBounceVertical = true
-//        Scroll.isScrollEnabled = true
-//        Scroll.isUserInteractionEnabled = true
-//        Scroll.contentSize = CGSize(width: 286, height: 1100)
-        
+        searchBar.searchTextField.backgroundColor = .white
+
+        searchBar.layer.cornerRadius = 8
+        searchBar.clipsToBounds = true
+  
         topOffersClnView.register(
           UINib(nibName: "SeasonSaleCollectionViewCell", bundle: nil),
           forCellWithReuseIdentifier: "SeasonSaleCollectionViewCell"
@@ -172,22 +148,82 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
         setupRecommededFlowLayout()
         fetchHomePageContent()
         self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .blue, titleColor: .white)
-                
-        self.title  = "Home"
-        //insert Data of HomeCategoryDataBase
+       
    
-        MenuButton.setImage(UIImage(named: "menu4"), for: .normal)
+      
         menu = SideMenuNavigationController(rootViewController:MenuListController())
         menu?.leftSide = true
+        menu?.presentationStyle = .menuSlideIn
+        menu?.enableSwipeToDismissGesture = true
+        menu?.enableTapToDismissGesture = true
         SideMenuManager.default.addPanGestureToPresent(toView: self.view)
         SideMenuManager.default.leftMenuNavigationController = menu
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.tabBarController?.navigationItem.hidesBackButton = true
      
         self.tabBarController?.tabBar.isHidden = false
+        setupNavigationBar()
     }
     
     
+       func setupNavigationBar() {
+           // MARK: - Left: Profile Button
+           let profileButton = UIButton(type: .custom)
+           if let image = UIImage(named: "userAvathar")  {
+               profileButton.setImage(image, for: .normal)
+           }
+           profileButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+           profileButton.imageView?.contentMode = .scaleAspectFill
+           profileButton.layer.cornerRadius = 16
+           profileButton.clipsToBounds = true
+           profileButton.addTarget(self, action: #selector(profileTapped), for: .touchUpInside)
+           
+           let profileItem = UIBarButtonItem(customView: profileButton)
+           navigationItem.leftBarButtonItem = profileItem
+
+           // MARK: - Center: Title
+           let titleLabel = UILabel()
+           let fullText = "GDRB E-Commerce"
+           let attributedText = NSMutableAttributedString(string: fullText)
+
+           // Set default color and font for entire string (white)
+           attributedText.addAttributes([
+               .foregroundColor: UIColor.white,
+               .font: UIFont.boldSystemFont(ofSize: 20)
+           ], range: NSRange(location: 0, length: fullText.count))
+
+           // Find exact range of "E" (first one only)
+           if let eRange = fullText.range(of: "E") {
+               let nsRange = NSRange(eRange, in: fullText)
+               attributedText.addAttribute(.foregroundColor, value: UIColor.orange, range: nsRange)
+           }
+
+           titleLabel.attributedText = attributedText
+           titleLabel.textAlignment = .center
+           titleLabel.sizeToFit()
+           navigationItem.titleView = titleLabel
+
+
+           // MARK: - Right: Notification Button
+           let notificationButton = UIButton(type: .system)
+           notificationButton.setImage(UIImage(systemName:"bell" ), for: .normal)
+           notificationButton.tintColor = .white
+           notificationButton.addTarget(self, action: #selector(notificationTapped), for: .touchUpInside)
+
+           let notificationItem = UIBarButtonItem(customView: notificationButton)
+           navigationItem.rightBarButtonItem = notificationItem
+       }
+
+       @objc func profileTapped() {
+           print("Profile icon tapped")
+           present(menu!, animated: true, completion: nil)
+
+       }
+
+       @objc func notificationTapped() {
+           print("Notification icon tapped")
+           // Show notifications or push a notifications screen
+       }
     
     
     func setupRecommededFlowLayout(){

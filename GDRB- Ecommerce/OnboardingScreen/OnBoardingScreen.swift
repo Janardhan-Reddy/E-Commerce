@@ -112,7 +112,7 @@ class OnBoardingScreen: UIViewController {
         print("Navigating to login screen...")
         guard !isViewControllerPushed else{ return}
         isViewControllerPushed = true
-       
+        UserDefaults.standard.set(true, forKey: "isOnboarded")
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let sceneDelegate = windowScene.delegate as? SceneDelegate {
             let loginVC = UIStoryboard(name: "Main", bundle: nil)

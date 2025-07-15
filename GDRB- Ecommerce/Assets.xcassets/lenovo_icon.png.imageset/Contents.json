@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Ellipse 59.png",
+      "filename" : "lenovo_icon.png.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Ellipse 59@2x.png",
+      "filename" : "lenovo_icon.png@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Ellipse 59@3x.png",
+      "filename" : "lenovo_icon.png@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

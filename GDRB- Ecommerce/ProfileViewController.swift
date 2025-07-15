@@ -22,12 +22,9 @@ class ProfileViewController:UIViewController,UITableViewDelegate,UITableViewData
   
     let ProfileLabel:[String] = ["Address","Wishlist","Myorders","Settings","Refer a friend","Logout"]
     @IBAction func Logout(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let LoginController = storyboard.instantiateViewController(identifier: "LoginController") as LoginController
-     
-        self.navigationController?.pushViewController(LoginController, animated: true)
-   
+
     }
+
     //UITableView
     @IBOutlet weak var ProfileTableView: UITableView!
    // tableView delegate methods

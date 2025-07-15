@@ -91,7 +91,9 @@ class LoadingView: UIView {
 
     func hide() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.alpha = 0
+            DispatchQueue.main.async{
+                self.alpha = 0
+            }
         }) { _ in
             self.activityIndicator.stopAnimating()
             self.removeFromSuperview()

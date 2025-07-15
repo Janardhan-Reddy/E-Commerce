@@ -13,16 +13,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let scene = (scene as? UIWindowScene) else {return}
-        let window = UIWindow (windowScene: scene as! UIWindowScene)
-       
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        let window = UIWindow(windowScene: windowScene)
+        var rootViewController: UIViewController
+
+        if UserDefaults.standard.object(forKey: "isOnboarded") == nil {
+            UserDefaults.standard.set(false, forKey: "isOnboarded")
+        }
+
+        if UserDefaults.standard.object(forKey: "isLogin") == nil {
+            UserDefaults.standard.set(false, forKey: "isLogin")
+        }
+        
+        let isOnboarded = UserDefaults.standard.bool(forKey: "isOnboarded")
+        let isLoggedIn = UserDefaults.standard.bool(forKey: "isLogin")
+
+        if !isOnboarded {
+            // Show onboarding only once
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            rootViewController = storyboard.instantiateViewController(withIdentifier: "OnboardingNavController")
+        } else if !isLoggedIn {
+            // After onboarding, show login screen
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginNavController")
+        } else {
+            // Logged in, show Home
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            rootViewController = storyboard.instantiateViewController(withIdentifier: "Tabbar")
+        }
+
+        window.rootViewController = rootViewController
+        self.window = window
         window.makeKeyAndVisible()
-       // self.window = window
-         //Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        //guard let _ = (scene as? UIWindowScene) else { return }
     }
+
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
