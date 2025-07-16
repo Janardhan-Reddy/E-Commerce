@@ -115,9 +115,9 @@ class OnBoardingScreen: UIViewController {
         UserDefaults.standard.set(true, forKey: "isOnboarded")
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let sceneDelegate = windowScene.delegate as? SceneDelegate {
-            let loginVC = UIStoryboard(name: "Main", bundle: nil)
-                .instantiateViewController(withIdentifier: "LoginNavController")
-            sceneDelegate.window?.rootViewController = loginVC
+            let tabbarVC = UIStoryboard(name: "Main", bundle: nil)
+                .instantiateViewController(withIdentifier: "Tabbar")
+            sceneDelegate.window?.rootViewController = tabbarVC
             sceneDelegate.window?.makeKeyAndVisible()
         }
 

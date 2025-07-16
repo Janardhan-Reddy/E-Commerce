@@ -29,19 +29,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let isOnboarded = UserDefaults.standard.bool(forKey: "isOnboarded")
         let isLoggedIn = UserDefaults.standard.bool(forKey: "isLogin")
 
-        if !isOnboarded {
+     //   if true {
             // Show onboarding only once
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             rootViewController = storyboard.instantiateViewController(withIdentifier: "OnboardingNavController")
-        } else if !isLoggedIn {
-            // After onboarding, show login screen
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginNavController")
-        } else {
-            // Logged in, show Home
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            rootViewController = storyboard.instantiateViewController(withIdentifier: "Tabbar")
-        }
+//        } else if !isLoggedIn {
+//            // After onboarding, show login screen
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginNavController")
+  //      }
+//            else {
+//            // Logged in, show Home
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            rootViewController = storyboard.instantiateViewController(withIdentifier: "Tabbar")
+//        }
 
         window.rootViewController = rootViewController
         self.window = window

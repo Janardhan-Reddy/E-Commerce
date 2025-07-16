@@ -18,6 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         IQKeyboardManager.shared().isEnabled = true
         
+        for family in UIFont.familyNames.sorted() {
+                   print("▶︎ Family: \(family)")
+                   let names = UIFont.fontNames(forFamilyName: family)
+                   for name in names {
+                       print("   - \(name)")
+                   }
+               }
+        
+        if let customFont = UIFont(name: "AmazonEmber-Regular", size: 18) {
+                    print("✅ Custom font loaded successfully: \(customFont.fontName)")
+                } else {
+                    print("❌ Custom font failed to load")
+                }
+
         return true
     }
     

@@ -74,8 +74,22 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
     }
    
     
-    
+    @IBOutlet weak var addAddressView: UIView! {
+        didSet {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleAddAddressTap))
+            addAddressView.addGestureRecognizer(tap)
+            addAddressView.isUserInteractionEnabled = true // Ensure it's tappable
+        }
+    }
+    @objc func handleAddAddressTap() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let SavedAddress = storyboard.instantiateViewController(identifier: "SavedAddress") as SavedAddress
+     
+        self.navigationController?.pushViewController(SavedAddress, animated: true)
 
+    }
+
+    
     
     @IBOutlet weak var recommendedCollectionView: UICollectionView!{
         didSet{
@@ -126,7 +140,7 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
         )
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 70, height: 100) // adjust to fit
+        layout.itemSize = CGSize(width: 80, height: 110)
         layout.scrollDirection = .horizontal
         ProductCategoryClnView.collectionViewLayout = layout
         
@@ -299,22 +313,12 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
 
     
    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if collectionView == self.ProductCategoryClnView{
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let ProductDetailsController = storyboard.instantiateViewController(identifier: "ProductDetailsController") as ProductDetailsController
-            ProductDetailsController.TitleName = collections?[indexPath.row].name ?? "-"
-            self.navigationController?.pushViewController(ProductDetailsController, animated: true)
-            
-        }
-    }
     
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          if collectionView == self.ProductCategoryClnView {
             let cell = ProductCategoryClnView.dequeueReusableCell(withReuseIdentifier: "SecondCollectionViewCell", for: indexPath) as! SecondCollectionViewCell
              
-             cell.CategoryImage.image = UIImage(systemName: "photo")?.withTintColor(UIColor(named: "DefaultBlue") ?? .blue)
+             cell.CategoryImage.image = UIImage(systemName: "photo.circle")?.withTintColor(UIColor(named: "DefaultBlue") ?? .blue)
              
              if let logo = collections?[indexPath.row].image_path?.replacingOccurrences(of: "\\", with: "/") {
                  let baseurl = "https://gdrbpractice.gdrbtechnologies.com/"
@@ -364,5 +368,17 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         }
         return UICollectionViewCell()
     }
+    
+    
+     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+         
+         if collectionView == self.ProductCategoryClnView{
+             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+             let ProductDetailsController = storyboard.instantiateViewController(identifier: "ProductDetailsController") as ProductDetailsController
+             ProductDetailsController.TitleName = collections?[indexPath.row].name ?? "-"
+             self.navigationController?.pushViewController(ProductDetailsController, animated: true)
+             
+         }
+     }
     
 }

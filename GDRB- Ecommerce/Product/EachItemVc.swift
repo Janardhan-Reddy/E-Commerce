@@ -57,7 +57,7 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         productPrice.text = "\(rupeeSymbol)\(price)"
         imagePreviewPagination.numberOfPages = eachItemData?.images?.count ?? 0
 
-       // descriptionTxt.text = eachItemData?.prdDescription ?? "-"
+        descriptionTxt.text = eachItemData?.prdDescription ?? "-"
         similarProductsCollectionView.isPagingEnabled = true
         setupLayoutForSimilarProductView()
         setupRecommededFlowLayout()
@@ -82,6 +82,37 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBAction func addToCartPressed(_ sender: UIButton) {
         guard let productId = eachItemData?.prdId else { return }
         LoadingView.shared.show()
+        
+        let accessToken = UserDefaults.standard.string(forKey: "authToken")
+        if accessToken == nil {
+            LoadingView.shared.hide()
+            showAlert(title: "Please Login",message: "Please Login to continue"){
+                UserDefaults.standard.removeObject(forKey: "authToken")
+                   UserDefaults.standard.set(false, forKey: "isLogin")
+
+                   // Load Login screen from storyboard
+                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                   let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginController")
+
+                   // Set login screen as the rootViewController, removing TabBarController
+                   if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                      let window = sceneDelegate.window {
+                       
+                       let nav = UINavigationController(rootViewController: loginVC)
+                       window.rootViewController = nav
+                       window.makeKeyAndVisible()
+                       
+                       // Optional: animation
+                       UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+                   }
+            }
+            
+            
+        }
+        
+        
+        
            viewModel.addProductToCart(prd_id: String(productId), quantity: "1") { response, error in
                guard error == nil else { return }
                DispatchQueue.main.async {
@@ -95,18 +126,28 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                        self.showToast(message: response.message ?? "Product already in cart", iconName: "exclamationmark.triangle.fill", backgroundColor: .systemOrange)
 
                    }else{
-                       self.showAlert(header: "Failed!", message:  "Adding Item Failed")
+                       self.showAlert(title:  "Failed!", message:  "Adding Item Failed")
                    }
                }
            }
        }
 
-       @IBAction func buyNowPressed(_ sender: UIButton) {
-           // Implement your Buy Now logic here
-           let vc = storyboard?.instantiateViewController(withIdentifier: "BillingVC") as! BillingVC
-           vc.billableItem = BillingModel(productImage: eachItemData?.firstImage,productName: eachItemData?.prdName, productPrice: eachItemData?.sellingPrice )
-           self.navigationController?.pushViewController(vc, animated: true)
-       }
+    @IBAction func buyNowPressed(_ sender: UIButton) {
+        let billingItem = BillingModel(
+            productImage: eachItemData?.firstImage,
+            productName: eachItemData?.prdName,
+            productPrice: eachItemData?.sellingPrice,
+            quantity: 1
+        )
+
+        let billingData = [billingItem]
+
+        let vc = storyboard?.instantiateViewController(withIdentifier: "BillingVC") as! BillingVC
+        vc.billableItem = billingData
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
 
        @IBAction func onWishListPressed(_ sender: UIButton) {
            guard let productId = eachItemData?.prdId else { return }
@@ -127,7 +168,7 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                            sender.isSelected = true
                            sender.setImage(UIImage(systemName: "heart.fill"), for: .selected)
                        } else {
-                           self.showAlert(header: "Failed!", message: "Failed to add to wishlist.")
+                           self.showAlert(title:  "Failed!", message: "Failed to add to wishlist.")
                            sender.setImage(UIImage(systemName: "heart"), for: .normal)
                        }
                    }
@@ -240,7 +281,7 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 let rupeeSymbol = "\u{20B9}"
                 let price = self.eachItemData?.prdPrice ?? "-"
                 self.productPrice.text = "\(rupeeSymbol)\(price)"
-                //self.descriptionTxt.text = //self.eachItemData?.prdDescription ?? "-"
+                self.descriptionTxt.text = self.eachItemData?.prdDescription ?? "-"
                 self.imagePreviewCollectionview.reloadData()
             }
             
@@ -260,14 +301,17 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         return 0
     }
     
-    func showAlert(header: String, message: String) {
-      let alert = UIAlertController(
-        title: title,
-        message: message,
-        preferredStyle: .alert
-      )
-      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        DispatchQueue.main.async{
+    func showAlert(title: String, message: String, okHandler: (() -> Void)? = nil) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            okHandler?()
+        }))
+        
+        DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
         }
     }

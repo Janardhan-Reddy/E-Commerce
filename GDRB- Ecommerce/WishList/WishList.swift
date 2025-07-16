@@ -26,6 +26,34 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
     
     private func loadProducts(){
         LoadingView.shared.show()
+        let accessToken = UserDefaults.standard.string(forKey: "authToken")
+        if accessToken == nil {
+            LoadingView.shared.hide()
+            showAlert(title: "Please Login",message: "Please Login to continue"){
+                UserDefaults.standard.removeObject(forKey: "authToken")
+                   UserDefaults.standard.set(false, forKey: "isLogin")
+
+                   // Load Login screen from storyboard
+                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                   let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginController")
+
+                   // Set login screen as the rootViewController, removing TabBarController
+                   if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                      let window = sceneDelegate.window {
+                       
+                       let nav = UINavigationController(rootViewController: loginVC)
+                       window.rootViewController = nav
+                       window.makeKeyAndVisible()
+                       
+                       // Optional: animation
+                       UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+                   }
+            }
+            
+            
+        }
+        
         viewModel.loadWishlistData { response, error in
             guard  error == nil else {return}
             
@@ -33,6 +61,7 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
                 self.wishListResponse = response
                 DispatchQueue.main.async {
                     LoadingView.shared.hide()
+                    self.showToast(message: response.message ?? "Wishlist Retrived Successfully", iconName: "checkmark.circle.fill", backgroundColor: .systemGreen, duration: 1)
                     self.recalculateTotal()
                     self.wishListTblView.reloadData()
                 }
@@ -73,11 +102,49 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
                 }
             }
         }
-        cell.wishListDeleteButton.tag = indexPath.row
-        cell.wishListDeleteButton.addTarget(self, action: #selector(deleteRow), for: .touchUpInside)
+     
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completionHandler) in
+            guard let self = self else { return }
+            
+            let item = wishListResponse?.wishListItems?[indexPath.row]
+            
+            // Show confirmation alert (optional)
+            let alert = UIAlertController(
+                title: "Delete",
+                message: "Are you sure you want to delete this item?",
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+                if let id = item?.id {
+                    self.deleteItem(for: String(id)) {
+                        self.loadProducts()
+                    }
+                }
+                completionHandler(true)
+            })
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                completionHandler(false)
+            })
+            
+            self.present(alert, animated: true)
+        }
+        
+        deleteAction.backgroundColor = UIColor.systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false // Optional: prevent full-swipe delete
+        
+        return configuration
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -121,6 +188,21 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
                 LoadingView.shared.hide()
                 completion()
             }
+        }
+    }
+    
+    func showAlert(title: String, message: String, okHandler: (() -> Void)? = nil) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            okHandler?()
+        }))
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

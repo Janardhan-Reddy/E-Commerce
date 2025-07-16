@@ -67,9 +67,9 @@ extension UIViewController {
         self.view.addSubview(toast)
         
         NSLayoutConstraint.activate([
-            toast.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            toast.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            toast.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            toast.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            toast.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            toast.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
         ])
         
         // Animate in

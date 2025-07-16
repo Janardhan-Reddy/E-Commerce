@@ -7,6 +7,7 @@
 
 import UIKit
 class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSource{
+    
     var indexForCell = Int()
     var totalSum = 0.0
     let viewModel = CartViewModel()
@@ -25,10 +26,8 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
         self.totlaAmt.text = balanceString
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        CartTableView.register(UINib(nibName: "CartCustomeCell", bundle: nil), forCellReuseIdentifier: "CartCustomeCell")
-        // self.tabBarController?.navigationItem.hidesBackButton = false
         
-       
+        CartTableView.register(UINib(nibName: "CartCustomeCell", bundle: nil), forCellReuseIdentifier: "CartCustomeCell")
         
     }
     
@@ -40,6 +39,33 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     
     private func loadCartItems(){
         LoadingView.shared.show()
+        let accessToken = UserDefaults.standard.string(forKey: "authToken")
+        if accessToken == nil {
+            LoadingView.shared.hide()
+            showAlert(title: "Please Login",message: "Please Login to continue"){
+                UserDefaults.standard.removeObject(forKey: "authToken")
+                   UserDefaults.standard.set(false, forKey: "isLogin")
+
+                   // Load Login screen from storyboard
+                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                   let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginController")
+
+                   // Set login screen as the rootViewController, removing TabBarController
+                   if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                      let window = sceneDelegate.window {
+                       
+                       let nav = UINavigationController(rootViewController: loginVC)
+                       window.rootViewController = nav
+                       window.makeKeyAndVisible()
+                       
+                       // Optional: animation
+                       UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+                   }
+            }
+            
+            
+        }
         viewModel.loadCartData { response, error in
             guard error == nil else {
                 return
@@ -47,7 +73,9 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
             
             self.cartModelResponse = response
             DispatchQueue.main.async {
+               
                 LoadingView.shared.hide()
+                self.showToast(message: response?.message ?? "Cart Retrived Successfully", iconName: "checkmark.circle.fill", backgroundColor: .systemGreen, duration: 1)
                 self.recalculateTotal()
                 self.CartTableView.reloadData()
             }
@@ -86,12 +114,22 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
         }
 
         // Assign delete action
-        cell.deleteAction = { [weak self] _ in
+
+
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completionHandler) in
             guard let self = self else { return }
             
+            let item = cartModelResponse?.cartItems?[indexPath.row]
+            
+            // Show confirmation alert (optional)
             let alert = UIAlertController(
                 title: "Delete",
-                message: "Are you sure you want to delete?",
+                message: "Are you sure you want to delete this item?",
                 preferredStyle: .alert
             )
             
@@ -101,17 +139,23 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
                         self.loadCartItems()
                     }
                 }
+                completionHandler(true)
             })
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                completionHandler(false)
+            })
             
-            DispatchQueue.main.async {
-                self.present(alert, animated: true)
-            }
+            self.present(alert, animated: true)
         }
-
-        return cell
+        
+        deleteAction.backgroundColor = UIColor.systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false // Optional: prevent full-swipe delete
+        
+        return configuration
     }
+
     func deleteItem(for id: String, completion: @escaping () -> Void) {
         LoadingView.shared.show()
         viewModel.deleteRecord(Id: id) { [weak self] deleteResponse, error in
@@ -170,15 +214,70 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     @IBOutlet weak var CartTableView: UITableView!
     //PlaceOrderButtonAction
     @IBAction func PlaceOrderAction(_ sender: UIButton) {
+       
+        guard let cartItems = cartModelResponse?.cartItems, !cartItems.isEmpty else {
+            showAlert(title: "Cart Empty", message: "Please add some items to your cart.")
+            return
+        }
+
+        // Compute total price (assuming price is a string like "12.99")
+        var totalSum: Double = 0.0
+        var billingModels: [BillingModel] = []
+
+        for item in cartItems {
+            guard let product = item.product,
+                  let priceString = product.sellingPrice,
+                  let price = Double(priceString),
+                  let quantity = item.quantity else {
+                continue
+            }
+
+            let itemTotal = price * Double(quantity)
+            totalSum += itemTotal
+
+            let billingItem = BillingModel(
+                productImage: product.firstImage,
+                productName: product.prdName,
+                productPrice: product.sellingPrice,
+                quantity: quantity
+            )
+
+            billingModels.append(billingItem)
+        }
+
+        // No items with valid prices
+        guard totalSum > 0 else {
+            showAlert(title: "Invalid Cart", message: "Cart items contain invalid prices.")
+            return
+        }
+
+        // Simulate delay before navigating
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            //push navigationController
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let OrderSummaryController = storyboard.instantiateViewController(identifier: "OrderSummaryController") as OrderSummaryController
-            
-            OrderSummaryController.total =  self.totalSum
-            
-            self.navigationController?.pushViewController(OrderSummaryController, animated: true)
+            let billingVC = storyboard.instantiateViewController(identifier: "BillingVC") as! BillingVC
+
+            billingVC.billableItem = billingModels
+          
+
+            self.navigationController?.pushViewController(billingVC, animated: true)
         }
     }
+
+    
+    func showAlert(title: String, message: String, okHandler: (() -> Void)? = nil) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            okHandler?()
+        }))
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
     
 }
