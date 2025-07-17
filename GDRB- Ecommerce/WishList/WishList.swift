@@ -13,15 +13,21 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
     var wishListResponse : WishListResponse?
     
     
-    @IBOutlet weak var wishListTblView: UITableView!
+    @IBOutlet weak var wishListTblView: UITableView!{
+        didSet{
+            self.wishListTblView.registerCells(cellIdentifiers: ["EmptyCartTableViewCell"])
+        }
+    }
 
     @IBOutlet weak var totalAmount: UILabel!
     
+    @IBOutlet weak var placeOrderBtn: UIButton!
     
     
     override func viewDidAppear(_ animated: Bool) {
         self.title = "Wish List"
         loadProducts()
+        
     }
     
     private func loadProducts(){
@@ -62,6 +68,9 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
                 DispatchQueue.main.async {
                     LoadingView.shared.hide()
                     self.showToast(message: response.message ?? "Wishlist Retrived Successfully", iconName: "checkmark.circle.fill", backgroundColor: .systemGreen, duration: 1)
+                    let hideEmptyCart = response.wishListItems?.count == 0
+                    self.totalAmount.isHidden = hideEmptyCart
+                    self.placeOrderBtn.isHidden = hideEmptyCart
                     self.recalculateTotal()
                     self.wishListTblView.reloadData()
                 }
@@ -82,20 +91,29 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let itemCount = wishListResponse?.wishListItems?.count ?? 0
-        
-        return itemCount
+        if wishListResponse?.wishListItems?.count != 0{
+            return wishListResponse?.wishListItems?.count ?? 1
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",for: indexPath) as! WishListTableViewCell
-        let item = wishListResponse?.wishListItems?[indexPath.row]
         
-        cell.wishListProductLabel.text = item?.product?.prdName
+        guard let safeitem = wishListResponse?.wishListItems, safeitem.count != 0 else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyCartTableViewCell") as! EmptyCartTableViewCell
+            return cell
+        }
+        
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WishListTableViewCell",for: indexPath) as! WishListTableViewCell
+        let item = safeitem[indexPath.row]
+        
+        cell.wishListProductLabel.text = item.product?.prdName
         let rupeeSymbol = "\u{20B9}"
-        let price = item?.product?.prdPrice ?? "-"
+        let price = item.product?.prdPrice ?? "-"
         cell.wishListPriceLabel.text = "Price: \(rupeeSymbol)\(price)"
-        if let imagePath = item?.product?.firstImage?.replacingOccurrences(of: "\\", with: "/") {
+        if let imagePath = item.product?.firstImage?.replacingOccurrences(of: "\\", with: "/") {
             UIImage.fetchImage(from: imagePath) { image in
                 DispatchQueue.main.async {
                     cell.wishListImage.image = image
@@ -147,7 +165,12 @@ class WishList:UIViewController,UITableViewDelegate,UITableViewDataSource
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+       
+        guard let safeitem = wishListResponse?.wishListItems, safeitem.count != 0 else {
+            return tableView.bounds.height * 0.8
+        }
+        
+        return 120
     }
     
     @objc func deleteRow(_ sender: UIButton) {

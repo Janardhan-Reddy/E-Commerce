@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Address+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Address+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:GDRB- Ecommerce.xcodeproj">
    </FileRef>
    <FileRef

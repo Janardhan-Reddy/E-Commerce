@@ -4,8 +4,8 @@
 //
 //  Created by Pravin Kumar on 08/07/25.
 //
-
 import UIKit
+import FLAnimatedImage
 
 class LoadingView: UIView {
     
@@ -26,18 +26,11 @@ class LoadingView: UIView {
         return view
     }()
     
-    private let logoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "CompanyLogo")) 
-        imageView.contentMode = .scaleAspectFit
+    private let gifView: FLAnimatedImageView = {
+        let imageView = FLAnimatedImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         return imageView
-    }()
-    
-    private let activityIndicator: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.color = .gray
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        return spinner
     }()
     
     private override init(frame: CGRect) {
@@ -52,8 +45,7 @@ class LoadingView: UIView {
     private func setupUI() {
         self.addSubview(backgroundView)
         backgroundView.addSubview(containerView)
-        containerView.addSubview(logoImageView)
-        containerView.addSubview(activityIndicator)
+        containerView.addSubview(gifView)
 
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -63,18 +55,23 @@ class LoadingView: UIView {
 
             containerView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
             containerView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-            containerView.widthAnchor.constraint(equalToConstant: 200),
-            containerView.heightAnchor.constraint(equalToConstant: 200),
+            containerView.widthAnchor.constraint(equalToConstant: 150),
+            containerView.heightAnchor.constraint(equalToConstant: 150),
 
-            logoImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            logoImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            logoImageView.widthAnchor.constraint(equalToConstant: 60),
-            logoImageView.heightAnchor.constraint(equalToConstant: 60),
-
-            activityIndicator.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20),
-            activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            activityIndicator.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
+            gifView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            gifView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            gifView.widthAnchor.constraint(equalToConstant: 80),
+            gifView.heightAnchor.constraint(equalToConstant: 80)
         ])
+
+        // Load GIF
+        if let path = Bundle.main.path(forResource: "shopping", ofType: "gif"),
+           let data = NSData(contentsOfFile: path) {
+            let gif = FLAnimatedImage(animatedGIFData: data as Data)
+            gifView.animatedImage = gif
+        }else{
+            print("Missing")
+        }
     }
 
     func show(on view: UIView? = UIApplication.shared.keyWindow) {
@@ -83,7 +80,6 @@ class LoadingView: UIView {
             targetView.addSubview(self)
         }
         self.alpha = 0
-        activityIndicator.startAnimating()
         UIView.animate(withDuration: 0.3) {
             self.alpha = 1
         }
@@ -91,11 +87,8 @@ class LoadingView: UIView {
 
     func hide() {
         UIView.animate(withDuration: 0.3, animations: {
-            DispatchQueue.main.async{
-                self.alpha = 0
-            }
+            self.alpha = 0
         }) { _ in
-            self.activityIndicator.stopAnimating()
             self.removeFromSuperview()
         }
     }

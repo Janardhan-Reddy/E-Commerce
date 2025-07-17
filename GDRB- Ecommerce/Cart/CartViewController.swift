@@ -16,6 +16,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     @IBOutlet weak var totlaAmt: UILabel!
     // UIImage of Cart
     
+    @IBOutlet weak var checkOutBtn: UIButton!
     
     override func viewDidLoad() {
         self.title = "My Cart"
@@ -27,8 +28,9 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        CartTableView.register(UINib(nibName: "CartCustomeCell", bundle: nil), forCellReuseIdentifier: "CartCustomeCell")
-        
+       
+        self.CartTableView.registerCells(cellIdentifiers: ["EmptyCartTableViewCell","CartCustomeCell" ])
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +78,10 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
                
                 LoadingView.shared.hide()
                 self.showToast(message: response?.message ?? "Cart Retrived Successfully", iconName: "checkmark.circle.fill", backgroundColor: .systemGreen, duration: 1)
+                let hideEmptyCart = response?.cartItems?.count == 0
+                self.totlaAmt.isHidden = hideEmptyCart
+                self.checkOutBtn.isHidden = hideEmptyCart
+                
                 self.recalculateTotal()
                 self.CartTableView.reloadData()
             }
@@ -87,17 +93,28 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     //delegate methods of tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return cartModelResponse?.cartItems?.count ?? 0
+        if cartModelResponse?.cartItems?.count != 0{
+            return cartModelResponse?.cartItems?.count ?? 1
+        }
+        return 1
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        guard let safeitem = cartModelResponse?.cartItems, safeitem.count != 0 else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyCartTableViewCell") as! EmptyCartTableViewCell
+            return cell
+        }
+        
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CartCustomeCell else {
             return UITableViewCell()
         }
 
-        let item = cartModelResponse?.cartItems?[indexPath.row]
-        let product = item?.product
+        let item = safeitem[indexPath.row]
+        let product = item.product
 
         // Set product name and price
         cell.CartProductLabel.text = product?.prdName ?? "-"
@@ -191,7 +208,12 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+      
+        guard let safeitem = cartModelResponse?.cartItems, safeitem.count != 0 else {
+            return tableView.bounds.height * 0.8
+        }
+        
+        return 120
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

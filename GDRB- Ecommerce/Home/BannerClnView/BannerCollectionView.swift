@@ -110,31 +110,28 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
       
     }
     
-     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                            withVelocity velocity: CGPoint,
-                                            targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let pageWidth = scrollView.bounds.width
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                    withVelocity velocity: CGPoint,
+                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        // Prevent native momentum scrolling
+        targetContentOffset.pointee = scrollView.contentOffset
+
+        let pageWidth = scrollView.frame.width
         let currentOffset = scrollView.contentOffset.x
-        let currentPage = round(currentOffset / pageWidth)
+        let targetIndex = Int(round(currentOffset / pageWidth))
 
-        // decide next page: only +1, 0 or -1
-        var nextPage = currentPage
-        if velocity.x > 0 {
-            nextPage = currentPage + 1
-        } else if velocity.x < 0 {
-            nextPage = currentPage - 1
-        }
-        // clamp to valid range:
-        let maxPage = CGFloat((banners?.count ?? 1) - 1)
-        nextPage = max(0, min(nextPage, maxPage))
+        let clampedIndex = max(0, min(targetIndex, (banners?.count ?? 1) - 1))
 
-        // force the final offset
-        targetContentOffset.pointee.x = nextPage * pageWidth
+        // Scroll like auto slider
+        self.scrollToItem(at: IndexPath(item: clampedIndex, section: 0), at: .left, animated: true)
 
-        // update your index & pagers
-        currentCellIndex = Int(nextPage)
-        controller.topPagination.currentPage = currentCellIndex
+        // Update index and page control
+        currentCellIndex = clampedIndex
+        controller.topPagination.currentPage = clampedIndex
     }
+
+
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         // Invalidate timer when user starts dragging
@@ -168,11 +165,11 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         // we already fetched & cached it
           cell.bannerImageView.image  = resizeAndFill(image: img, targetSize: self.bounds.size)
          // resizeImage(image:img , targetSize: self.bounds.size)
-        cell.bannerImageView.contentMode = .scaleToFill
+        cell.bannerImageView.contentMode = .scaleAspectFill
       } else {
         // still loading: show placeholder
         cell.bannerImageView.image   = nil
-        cell.bannerImageView.contentMode = .center
+          cell.bannerImageView.contentMode = .scaleAspectFill
       }
 
       return cell
@@ -192,6 +189,11 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         return 0
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
     
     func resizeAndFill(image: UIImage, targetSize: CGSize) -> UIImage {
         let sourceSize = image.size

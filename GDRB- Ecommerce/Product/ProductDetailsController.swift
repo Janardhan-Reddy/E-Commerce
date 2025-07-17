@@ -68,7 +68,7 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
         if let title = TitleName{
             loadProducts(productCaregoryname: title.lowercased())
         }
-        setupRecommededFlowLayout()
+        setupRecommendedFlowLayout()
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 80, height: 80) 
         layout.scrollDirection = .horizontal
@@ -79,24 +79,24 @@ class ProductDetailsController:UIViewController,UICollectionViewDelegate,UIColle
       
     }
     
-    func setupRecommededFlowLayout(){
+    func setupRecommendedFlowLayout() {
         let recommendedLayout = UICollectionViewFlowLayout()
 
         let recommendedItemsPerRow: CGFloat = 2
-        let recommendedSpacing: CGFloat = 8
+        let spacing: CGFloat = 3
 
-        let totalSpacing = (recommendedItemsPerRow - 1) * recommendedSpacing
+        let totalSpacing = (recommendedItemsPerRow - 1) * spacing
         let collectionViewWidth = productItemsClnView.bounds.width
-        let recommendedItemWidth = (collectionViewWidth - totalSpacing) / recommendedItemsPerRow
+        let itemWidth = (collectionViewWidth - totalSpacing) / recommendedItemsPerRow
 
-        recommendedLayout.itemSize = CGSize(width: recommendedItemWidth, height: recommendedItemWidth * 1.3)
-        recommendedLayout.minimumInteritemSpacing = recommendedSpacing
-        recommendedLayout.minimumLineSpacing = 8
+        recommendedLayout.itemSize = CGSize(width: itemWidth * 1.02 , height: itemWidth * 1.1)
+        recommendedLayout.minimumInteritemSpacing = spacing
+        recommendedLayout.minimumLineSpacing = spacing
         recommendedLayout.scrollDirection = .vertical
 
         productItemsClnView.collectionViewLayout = recommendedLayout
-
     }
+
     
     
      

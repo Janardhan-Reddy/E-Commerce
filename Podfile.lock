@@ -1,20 +1,24 @@
 PODS:
+  - FLAnimatedImage (1.0.17)
   - IQKeyboardManager (6.5.19)
   - SideMenu (6.5.0)
 
 DEPENDENCIES:
+  - FLAnimatedImage
   - IQKeyboardManager
   - SideMenu
 
 SPEC REPOS:
   trunk:
+    - FLAnimatedImage
     - IQKeyboardManager
     - SideMenu
 
 SPEC CHECKSUMS:
+  FLAnimatedImage: bbf914596368867157cc71b38a8ec834b3eeb32b
   IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
 
-PODFILE CHECKSUM: 3053b29f8c796883380b63aebf6595f57e8e2128
+PODFILE CHECKSUM: 7707a5ba10cfc39d4b2fcec00a4ed257fa31bfcc
 
 COCOAPODS: 1.16.2

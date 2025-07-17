@@ -9,22 +9,30 @@ import UIKit
 class MyOrdersViewController:UIViewController,UITableViewDelegate,UITableViewDataSource{
     //UIImage
     
-    
-    
+    @IBOutlet weak var OrdersTableView: UITableView!
+
+    override func viewDidLoad(){
+        super.viewDidLoad()
+        self.OrdersTableView.registerCells(cellIdentifiers: ["EmptyCartTableViewCell"])
+        self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .red, titleColor: .white)
+        self.title = "My Orders"
+    }
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       0
+       1
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OrdersCell",for: indexPath) as! MyordersCustomeCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyCartTableViewCell",for: indexPath) as! EmptyCartTableViewCell
        
         return cell
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 160
+       
+        let emptyCellHeight = OrdersTableView.bounds.height * 0.85
+        return emptyCellHeight
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
@@ -39,12 +47,6 @@ class MyOrdersViewController:UIViewController,UITableViewDelegate,UITableViewDat
             }
     
     
-    @IBOutlet weak var OrdersTableView: UITableView!
-    override func viewDidAppear(_ animated: Bool) {
    
-    }
-      override func viewDidLoad() {
      
-       
-    }
 }

@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-GDRB- Ecommerce/Pods-GDRB- Ecommerce-frameworks.sh
+${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework
 ${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework
 ${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework

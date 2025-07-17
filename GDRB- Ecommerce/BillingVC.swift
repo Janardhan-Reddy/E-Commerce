@@ -69,7 +69,7 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
         ) {
             self.deliveryOptionsTextField.becomeFirstResponder()
         }
-        
+        self.title = "Place Order"
         itemTableViewHeight.constant = CGFloat(billableItem.count * 130)
         totalHeight.constant = CGFloat(billableItem.count * 130) + totalHeight.constant
     }

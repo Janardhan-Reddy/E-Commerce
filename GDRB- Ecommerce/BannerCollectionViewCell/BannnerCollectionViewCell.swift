@@ -14,13 +14,25 @@ class BannnerCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var bannerImageView: UIImageView!
     
     
-    
     override func awakeFromNib() {
-        super.awakeFromNib()
+           super.awakeFromNib()
+
+           // Ensure the imageView stretches to fill the cell
+           bannerImageView.contentMode = .scaleAspectFill
+           bannerImageView.clipsToBounds = true
         bannerBackgroundView.layer.cornerRadius = 5
         bannerBackgroundView.layer.masksToBounds = true
         bannerImageView.layer.cornerRadius = 5
         bannerImageView.layer.masksToBounds = true
-    }
+       }
+
+       override func layoutSubviews() {
+           super.layoutSubviews()
+
+           // If you're not using Auto Layout (Storyboard/XIB), set frame manually:
+           bannerImageView.frame = contentView.bounds
+       }
+    
+  
 
 }

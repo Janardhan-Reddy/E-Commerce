@@ -8,6 +8,7 @@
 import UIKit
 class ProfileViewController:UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
     
+    
     @IBOutlet weak var ProfileImage: UIImageView!
    
     @IBOutlet weak var ProfileMail: UILabel!
@@ -29,6 +30,18 @@ class ProfileViewController:UIViewController,UITableViewDelegate,UITableViewData
     @IBOutlet weak var ProfileTableView: UITableView!
    // tableView delegate methods
   
+    override func viewDidLoad() {
+        if let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
+            // Use the storedEmail value as needed
+            ProfileName.text = storedEmail
+            print(storedEmail)
+        }
+        self.title = "My Profile"
+        self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .red, titleColor: .white)
+     
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ProfileLabel.count
     }
@@ -103,14 +116,5 @@ class ProfileViewController:UIViewController,UITableViewDelegate,UITableViewData
     
     
    
-    override func viewDidLoad() {
-        if let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
-            // Use the storedEmail value as needed
-            ProfileName.text = storedEmail
-            print(storedEmail)
-        }
-        self.title = "My Profile"
-       
-     
-    }
+
 }

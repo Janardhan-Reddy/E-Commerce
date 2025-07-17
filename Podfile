@@ -8,6 +8,8 @@ target 'GDRB- Ecommerce' do
   # Add your pods here as needed
   pod 'SideMenu'
 pod 'IQKeyboardManager'
+pod 'FLAnimatedImage'
+
  
   target 'GDRB- EcommerceTests' do
     inherit! :search_paths
