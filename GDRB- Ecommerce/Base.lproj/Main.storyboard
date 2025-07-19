@@ -477,7 +477,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ayt-nh-gih">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="vXR-l1-QU9" id="ocx-rR-Pmt"/>
@@ -2558,7 +2558,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZp-LN-qGf">
-                                                                    <rect key="frame" x="16.666666666666671" y="69.333333333333329" width="78" height="14.666666666666671"/>
+                                                                    <rect key="frame" x="16.666666666666671" y="69.333333333333329" width="77.999999999999986" height="14.666666666666671"/>
                                                                     <fontDescription key="fontDescription" name="AmazonEmber-Regular" family="Amazon Ember" pointSize="12"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -3443,7 +3443,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa9-4b-npQ">
-                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NwE-GG-myg" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="700"/>
@@ -3567,33 +3567,46 @@
                                                         <rect key="frame" x="0.0" y="140" width="373" height="160"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3L-Yq-X0e">
-                                                                <rect key="frame" x="10" y="15.000000000000002" width="138.33333333333334" height="21.666666666666671"/>
+                                                                <rect key="frame" x="10" y="6" width="138.33333333333334" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="YIh-mc-vy6"/>
+                                                                </constraints>
                                                                 <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="18"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123, Example Street , City, Country - 123456" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8d-YB-5Zt">
-                                                                <rect key="frame" x="10" y="44.666666666666686" width="223.66666666666666" height="43.333333333333343"/>
-                                                                <fontDescription key="fontDescription" name="AmazonEmber-Regular" family="Amazon Ember" pointSize="18"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8d-YB-5Zt">
+                                                                <rect key="frame" x="10" y="31" width="348" height="89"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="bsH-4y-Xq7"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="AmazonEmber-Regular" family="Amazon Ember" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mcB-nm-GNt">
-                                                                <rect key="frame" x="10" y="118" width="181.33333333333334" height="32"/>
+                                                                <rect key="frame" x="10" y="125" width="181.33333333333334" height="25"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="25" id="Oft-6x-9ku"/>
+                                                                </constraints>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Change / Add Addresss">
                                                                     <fontDescription key="titleFontDescription" name="AmazonEmber-Regular" family="Amazon Ember" pointSize="15"/>
                                                                 </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="changeAddressTapped:" destination="KhI-GR-sLX" eventType="touchUpInside" id="Yxd-bN-ffk"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="160" id="CHk-g2-50M"/>
-                                                            <constraint firstItem="N3L-Yq-X0e" firstAttribute="top" secondItem="Waq-yq-zJV" secondAttribute="top" constant="15" id="JjU-CJ-440"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="CHk-g2-50M"/>
+                                                            <constraint firstItem="mcB-nm-GNt" firstAttribute="top" secondItem="F8d-YB-5Zt" secondAttribute="bottom" constant="5" id="G9P-CN-6Me"/>
+                                                            <constraint firstItem="N3L-Yq-X0e" firstAttribute="top" secondItem="Waq-yq-zJV" secondAttribute="top" constant="6" id="JjU-CJ-440"/>
                                                             <constraint firstItem="mcB-nm-GNt" firstAttribute="leading" secondItem="Waq-yq-zJV" secondAttribute="leading" constant="10" id="SRs-Ef-DLk"/>
                                                             <constraint firstItem="N3L-Yq-X0e" firstAttribute="leading" secondItem="Waq-yq-zJV" secondAttribute="leading" constant="10" id="V3Y-Ig-ald"/>
-                                                            <constraint firstItem="F8d-YB-5Zt" firstAttribute="width" secondItem="Waq-yq-zJV" secondAttribute="width" multiplier="0.6" id="XVZ-9F-lQD"/>
-                                                            <constraint firstItem="F8d-YB-5Zt" firstAttribute="top" secondItem="N3L-Yq-X0e" secondAttribute="bottom" constant="8" id="c3h-8h-FKG"/>
+                                                            <constraint firstAttribute="trailing" secondItem="F8d-YB-5Zt" secondAttribute="trailing" constant="15" id="YXO-xS-B7P"/>
+                                                            <constraint firstItem="F8d-YB-5Zt" firstAttribute="top" secondItem="N3L-Yq-X0e" secondAttribute="bottom" constant="5" id="c3h-8h-FKG"/>
                                                             <constraint firstItem="F8d-YB-5Zt" firstAttribute="leading" secondItem="N3L-Yq-X0e" secondAttribute="leading" id="oLO-io-Apx"/>
                                                             <constraint firstAttribute="bottom" secondItem="mcB-nm-GNt" secondAttribute="bottom" constant="10" id="oLQ-pm-UUl"/>
                                                         </constraints>
@@ -3751,6 +3764,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" selectedImage="house.fill" id="E0G-P7-mh1"/>
+                    <navigationItem key="navigationItem" id="zGG-9r-SIN"/>
                     <connections>
                         <outlet property="changeAddressBtn" destination="mcB-nm-GNt" id="jVF-fY-Eux"/>
                         <outlet property="deliveryAddress" destination="F8d-YB-5Zt" id="FuT-tR-wZG"/>
@@ -3765,7 +3779,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tRR-yc-Opg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11558.015267175571" y="1245.0704225352113"/>
+            <point key="canvasLocation" x="7995" y="1620"/>
         </scene>
         <!--Home-->
         <scene sceneID="FzK-fP-kbI">
@@ -3819,7 +3833,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXR-l1-QU9" kind="relationship" relationship="rootViewController" id="5Ec-Tj-INh"/>
+                        <segue destination="KhI-GR-sLX" kind="relationship" relationship="rootViewController" id="ZW7-1z-c82"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="re2-2g-9z2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4033,19 +4047,19 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

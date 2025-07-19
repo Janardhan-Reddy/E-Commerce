@@ -7,17 +7,27 @@
 
 import UIKit
 
+protocol DropdownDataSource: AnyObject {
+    // Number of rows to display
+    func numberOfDropdownItems() -> Int
+    
+    // Text for row at index
+    func dropdownItemTitle(at index: Int) -> String
+    
+    // Handle selection
+    func didSelectDropdownItem(at index: Int)
+}
+
 class DropdownSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     private let tableView = UITableView()
-    private var items: [String] = []
-    private var onSelect: ((String) -> Void)?
+    weak var dataSource: DropdownDataSource?
     
+    // MARK: - Init
     init() {
         super.init(frame: .zero)
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
         setupTableView()
-      
     }
     
     required init?(coder: NSCoder) {
@@ -32,20 +42,26 @@ class DropdownSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.register(DropdownCell.self, forCellReuseIdentifier: "DropdownCell")
         addSubview(tableView)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+           guard let touch = touches.first else { return }
+           let location = touch.location(in: self)
+           if !tableView.frame.contains(location) {
+               self.removeFromSuperview()
+           }
+       }
 
-    func show(over parent: UIView, anchor: UITextField, items: [String], onSelect: @escaping (String) -> Void) {
-        self.items = items
-        self.onSelect = onSelect
-
+    func show(over parent: UIView, anchor: UITextField, dataSource: DropdownDataSource) {
+        self.dataSource = dataSource
         parent.addSubview(self)
         frame = parent.bounds
         
+        let count = dataSource.numberOfDropdownItems()
         let anchorFrame = anchor.convert(anchor.bounds, to: parent)
-        let maxHeight = min(CGFloat(items.count * 40), 200)
+        let maxHeight = min(CGFloat(count * 40), 200)
         let spaceBelow = parent.bounds.height - anchorFrame.maxY
         let showAbove = spaceBelow < maxHeight
-
-        let tableY = showAbove ? anchorFrame.minY - maxHeight : anchorFrame.maxY
+        let tableY = showAbove ? (anchorFrame.minY - maxHeight) : anchorFrame.maxY
 
         tableView.frame = CGRect(
             x: anchorFrame.origin.x,
@@ -53,32 +69,29 @@ class DropdownSelectorView: UIView, UITableViewDelegate, UITableViewDataSource {
             width: anchorFrame.width,
             height: maxHeight
         )
-
         tableView.reloadData()
     }
 
-
-  
-
     // MARK: - UITableView
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return dataSource?.numberOfDropdownItems() ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = items[indexPath.row]
-         let cell = tableView.dequeueReusableCell(withIdentifier: "DropdownCell", for: indexPath) as! DropdownCell
-            cell.configure(with: item)
-            return cell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DropdownCell", for: indexPath) as! DropdownCell
+        if let title = dataSource?.dropdownItemTitle(at: indexPath.row) {
+            cell.configure(with: title)
+        }
+        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        onSelect?(items[indexPath.row])
-        self.removeFromSuperview()
+        dataSource?.didSelectDropdownItem(at: indexPath.row)
+        removeFromSuperview()
     }
 }
+
 
 class DropdownCell: UITableViewCell {
 

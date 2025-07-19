@@ -19,8 +19,9 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
     @IBOutlet weak var checkOutBtn: UIButton!
     
     override func viewDidLoad() {
-        self.title = "My Cart"
-        
+     
+     
+        self.setCustomTitle(withImage: "cart.circle", withTitle: "My Cart")
         self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .red, titleColor: .white)
         let rupeeSymbol = "\u{20B9}"
         let balanceString = String(format: NSLocalizedString("Total Amount: \(rupeeSymbol) %.2f", comment: ""), totalSum)
@@ -37,6 +38,7 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
         loadCartItems()
     }
     
+
     
     
     private func loadCartItems(){
@@ -261,7 +263,8 @@ class CartViewController:UIViewController,UITableViewDelegate,UITableViewDataSou
                 productImage: product.firstImage,
                 productName: product.prdName,
                 productPrice: product.sellingPrice,
-                quantity: quantity
+                quantity: quantity,
+                orderId: product.prdId ?? 0
             )
 
             billingModels.append(billingItem)

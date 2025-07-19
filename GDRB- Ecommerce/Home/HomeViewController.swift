@@ -244,15 +244,15 @@ class HomeViewController:UIViewController, UINavigationBarDelegate{
         let recommendedLayout = UICollectionViewFlowLayout()
 
         let recommendedItemsPerRow: CGFloat = 2
-        let recommendedSpacing: CGFloat = 5
+       
 
-        let totalSpacing = (recommendedItemsPerRow - 1) * recommendedSpacing
+        let totalSpacing = (recommendedItemsPerRow - 1)
         let collectionViewWidth = recommendedCollectionView.bounds.width
         let recommendedItemWidth = (collectionViewWidth - totalSpacing) / recommendedItemsPerRow
 
-        recommendedLayout.itemSize = CGSize(width: recommendedItemWidth, height: recommendedItemWidth * 1.4)
-        recommendedLayout.minimumInteritemSpacing = recommendedSpacing
-        recommendedLayout.minimumLineSpacing = recommendedSpacing
+        recommendedLayout.itemSize = CGSize(width: recommendedItemWidth * 1.02, height: recommendedItemWidth * 1.4)
+        recommendedLayout.minimumInteritemSpacing = 0
+        recommendedLayout.minimumLineSpacing = 5
         recommendedLayout.scrollDirection = .vertical
 
         recommendedCollectionView.collectionViewLayout = recommendedLayout

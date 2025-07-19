@@ -18,7 +18,7 @@ class DatabaseHandler {
 
     // MARK: - Core Data Stack
     static var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "AddressDataModel")
+        let container = NSPersistentContainer(name: "DataModel")
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
                 print(" Failed to load persistent stores: \(error), \(error.userInfo)")
@@ -30,8 +30,8 @@ class DatabaseHandler {
     static var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-
-    // MARK: - Core Data Saving Support
+    
+    
     static func saveContext() {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -45,28 +45,40 @@ class DatabaseHandler {
         }
     }
     
+    // MARK: - Core Data Saving Support
+    func createEntity<T: NSManagedObject>(ofType type: T.Type) -> T? {
+          let context = DatabaseHandler.context
+          let entityName = String(describing: type)
+          guard let entity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? T else {
+              return nil
+          }
+          return entity
+      }
     
-    func fetchAddresses() -> [Address] {
-        let context = DatabaseHandler.context
-        let fetchRequest: NSFetchRequest<Address> = Address.fetchRequest()
-        
-        do {
-            let addresses = try context.fetch(fetchRequest)
-            print(" Successfully fetched \(addresses.count) addresses.")
-            return addresses
-        } catch {
-            print(" Failed to fetch addresses: \(error.localizedDescription)")
-            return []
-        }
-    }
     
-    func deleteAddress(_ address: Address) {
-        let context = DatabaseHandler.context
-        context.delete(address)
+    func fetchEntities<T: NSManagedObject>(ofType type: T.Type) -> [T] {
+          let context = DatabaseHandler.context
+          let request = NSFetchRequest<T>(entityName: String(describing: type))
+          do {
+              let objects = try context.fetch(request)
+              print(" Fetched \(objects.count) \(type) entities.")
+              return objects
+          } catch {
+              print(" Failed to fetch: \(error)")
+              return []
+          }
+      }
+    
+    func deleteEntity<T: NSManagedObject>(_ object: T) {
+           let context = DatabaseHandler.context
+           context.delete(object)
         DatabaseHandler.saveContext()
-        print("🗑️ Address deleted.")
-    }
-
+           print("🗑️ \(String(describing: T.self)) deleted.")
+       }
+    
+    
+    
+    
 
 
 }

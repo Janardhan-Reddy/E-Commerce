@@ -137,7 +137,7 @@ class EachItemVc: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             productImage: eachItemData?.firstImage,
             productName: eachItemData?.prdName,
             productPrice: eachItemData?.sellingPrice,
-            quantity: 1
+            quantity: 1, orderId: eachItemData?.prdId ?? 0
         )
 
         let billingData = [billingItem]

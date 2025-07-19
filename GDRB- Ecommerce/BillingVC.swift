@@ -12,11 +12,18 @@ struct BillingModel {
     var productName: String?
     var productPrice: String?
     var quantity: Int = 1
+    var orderId : Int
+    
 }
 
 
-class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, AddressSelectionHandler {
+   
+
     
+    let deliveryOptions = [("Standard Delivery(Rs 50, 5-7 days)" , 50),
+                   ("Express Delivery(Rs 100, 2-3 days)",100),
+                   ("Same Day Delivery(Rs 200, Today)",200)]
     
     
     // MARK: - Razorpay Delegate
@@ -32,10 +39,11 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
     
     // MARK: - Properties
     var billableItem: [BillingModel] = []
+    var placedOrder : [PlaceOrder] = []
     var razorpay: RazorpayCheckout!
     var deliveryCharge: Double = 50
     var total: Double = 0
-    var dropdownSelector: DropdownSelectorView?
+    var myDropdown = DropdownSelectorView()
     var baseTotalHeight: CGFloat = 0
     
     // MARK: - Outlets
@@ -50,10 +58,22 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
     @IBOutlet weak var totalLabel: UILabel!
     
     @IBOutlet weak var itemTableViewHeight: NSLayoutConstraint!
+    
+    
+    @IBAction func changeAddressTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let SavedAddress = storyboard.instantiateViewController(identifier: "SavedAddress") as SavedAddress
+        SavedAddress.delegate = self 
+        self.navigationController?.pushViewController(SavedAddress, animated: true)
+        
+    }
+  
+       
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         self.setNavigationBarColors(backgroundColor: UIColor(named: "DefaultBlue") ?? .red, titleColor: .white)
         deliveryOptionsTextField.delegate = self
         productListTableView.delegate = self
         productListTableView.dataSource = self
@@ -69,16 +89,74 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
         ) {
             self.deliveryOptionsTextField.becomeFirstResponder()
         }
-        self.title = "Place Order"
-        itemTableViewHeight.constant = CGFloat(billableItem.count * 130)
-        totalHeight.constant = CGFloat(billableItem.count * 130) + totalHeight.constant
+       
+
+        self.setCustomTitle(withImage: "bag.circle", withTitle: "My Orders")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        itemTableViewHeight.constant = CGFloat(placedOrder.count * 130)
+        totalHeight.constant = CGFloat(placedOrder.count * 130) + totalHeight.constant
+     
+        saveBillableItemsToCoreDataIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.fetchPlaceOrderItemsAndDisplay()
+            
+        }
+    }
+    
+    func saveBillableItemsToCoreDataIfNeeded() {
+     
+        let existingItems = DatabaseHandler.shared.fetchEntities(ofType: PlaceOrder.self)
+
+        for billing in billableItem {
+            let orderId = Int64(billing.orderId)
+            let productName = billing.productName
+
+            let isAlreadySaved = existingItems.contains { item in
+                item.orderId == orderId && item.productName == productName
+            }
+
+            // If not found, save it
+            if !isAlreadySaved {
+                if let placedItem = DatabaseHandler.shared.createEntity(ofType: PlaceOrder.self) {
+                    placedItem.productImage = billing.productImage
+                    placedItem.productName = productName
+                    if let priceString = billing.productPrice?
+                                            .replacingOccurrences(of: "₹", with: "")
+                                            .trimmingCharacters(in: .whitespacesAndNewlines),
+                       let priceDouble = Double(priceString) {
+                        placedItem.productPrice = Int64(priceDouble)
+                    } else {
+                        placedItem.productPrice = 0
+                    }
+
+                    placedItem.productQuantity = Int64(billing.quantity)
+                    placedItem.orderId = orderId
+                }
+            }
+        }
+
+        DatabaseHandler.saveContext()
+    }
+
+    
+    func fetchPlaceOrderItemsAndDisplay() {
+        let items = DatabaseHandler.shared.fetchEntities(ofType: PlaceOrder.self)
+        self.placedOrder = items
+        self.updateTotals()
+        self.itemTableViewHeight.constant = CGFloat(self.placedOrder.count * 130)
+        self.totalHeight.constant = self.itemTableViewHeight.constant + self.baseTotalHeight
+        productListTableView.reloadData()
+    }
+    
+
     
     // MARK: - Setup
     
     @IBAction func onContinuePress(_ sender: UIButton) {
-        print("Continue pressed with item: \(billableItem)")
-        if billableItem.isEmpty{
+        print("Continue pressed with item: \(placedOrder)")
+        if placedOrder.isEmpty{
             showAlert(title: "Items Empty", message: "Please add atleast one item")
             return
         }
@@ -90,10 +168,10 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
         let rupeeSymbol = "\u{20B9}"
         var subtotal: Double = 0.0
         
-        billableItem.forEach { item in
-            guard let priceStr = item.productPrice,
-                  let price = Double(priceStr) else { return }
-            subtotal += price * Double(item.quantity)
+        placedOrder.forEach { item in
+            let priceStr = item.productPrice
+            let price = Double(priceStr)
+            subtotal += price * Double(item.productQuantity)
         }
         
         total = subtotal + deliveryCharge
@@ -107,7 +185,7 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
         let amountInPaise = Int(total * 100)
         
         // Combine all product names for Razorpay "name" field
-        let combinedName = billableItem.map { $0.productName ?? "Item" }.joined(separator: ", ")
+        let combinedName = placedOrder.map { $0.productName ?? "Item" }.joined(separator: ", ")
         
         let options: [String: Any] = [
             "amount": amountInPaise,
@@ -135,40 +213,30 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == deliveryOptionsTextField {
-            let options = ["Standard Delivery(Rs 50, 5-7 days)",
-                           "Express Delivery(Rs 100, 2-3 days)",
-                           "Same Day Delivery(Rs 200, Today)"]
-            
-            dropdownSelector = DropdownSelectorView()
-            dropdownSelector?.show(over: self.view, anchor: textField, items: options, onSelect: { [weak self] selected in
-                self?.deliveryOptionsTextField.text = selected
-                if let match = selected.range(of: #"Rs\s*(\d+)"#, options: .regularExpression) {
-                    let amountString = String(selected[match]).replacingOccurrences(of: "Rs", with: "").trimmingCharacters(in: .whitespaces)
-                    if let amount = Double(amountString) {
-                        self?.deliveryCharge = amount
-                        self?.updateTotals()
-                    }
-                }
-                self?.dropdownSelector = nil
-            })
+           
+            presentDropdown(anchor: deliveryOptionsTextField)
+
         }
         return false
     }
     
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return billableItem.count
+        return placedOrder.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductListCell") as! ProductListCell
         
-        cell.productNameLabel.text = billableItem[indexPath.row].productName ?? ""
+        cell.productNameLabel.text = placedOrder[indexPath.row].productName ?? ""
         cell.quantityLabel.text =
-        "\(billableItem[indexPath.row].quantity )"
-        cell.productPriceLabel.text = billableItem[indexPath.row].productPrice ?? ""
+        String(placedOrder[indexPath.row].productQuantity)
         
-        UIImage.fetchImage(from: billableItem[indexPath.row].productImage ?? "", baseURL: "https://gdrbpractice.gdrbtechnologies.com/") { image in
+        let price = Double(placedOrder[indexPath.row].productPrice)
+        cell.productPriceLabel.text = String(format: "\u{20B9} %.2f", price)
+        
+        UIImage.fetchImage(from: placedOrder[indexPath.row].productImage ?? "", baseURL: "https://gdrbpractice.gdrbtechnologies.com/") { image in
             DispatchQueue.main.async {
                 cell.productImageView.image = image
             }
@@ -178,13 +246,13 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
         
         cell.onQuantityChanged = { [weak self] isIncrement in
             guard let self = self else { return }
-            var quantity = self.billableItem[indexPath.row].quantity
+            var quantity = self.placedOrder[indexPath.row].productQuantity
             if isIncrement {
                 quantity += 1
             } else {
                 quantity = max(1, quantity - 1)
             }
-            self.billableItem[indexPath.row].quantity = quantity
+            self.placedOrder[indexPath.row].productQuantity = Int64(quantity)
             self.productListTableView.reloadRows(at: [indexPath], with: .automatic)
             self.updateTotals()
             
@@ -197,7 +265,6 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completionHandler) in
             guard let self = self else { return }
             
-            let item = billableItem[indexPath.row]
             
             // Show confirmation alert (optional)
             let alert = UIAlertController(
@@ -207,10 +274,12 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
             )
             
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
-                self.billableItem.remove(at: indexPath.row)
+              
+                DatabaseHandler.shared.deleteEntity(self.placedOrder[indexPath.row])
+                self.placedOrder.remove(at: indexPath.row)
                 self.productListTableView.reloadData()
                 self.updateTotals()
-                self.itemTableViewHeight.constant = CGFloat(self.billableItem.count * 130)
+                self.itemTableViewHeight.constant = CGFloat(self.placedOrder.count * 130)
                 self.totalHeight.constant = self.itemTableViewHeight.constant + self.baseTotalHeight
                 completionHandler(true)
             })
@@ -233,7 +302,52 @@ class BillingVC: UIViewController, RazorpayPaymentCompletionProtocol, UITextFiel
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
+    
+    func onAddressCellSelected(_ address: Address) {
+        let name = address.fullName?.capitalized ?? ""
+        
+        let addressString = [
+            address.flatNumber,
+            address.localAddress?.capitalized,
+            address.landmark?.capitalized,
+            address.city?.capitalized,
+            address.state?.capitalized,
+            "India - \(address.pincode)"
+        ]
+        .compactMap { $0 }
+        .joined(separator: ", ")
+        
+        let phoneNumber = String(address.phoneNumber)
+        deliveryAddress.text = "\(name)\n\(addressString)\nPhone: \(phoneNumber)"
+    }
+
+    
 }
+
+extension BillingVC: DropdownDataSource{//dropdown selection
+    func numberOfDropdownItems() -> Int {
+        deliveryOptions.count
+    }
+    
+    func dropdownItemTitle(at index: Int) -> String {
+        deliveryOptions[index].0
+    }
+    
+    func didSelectDropdownItem(at index: Int) {
+        let selectedText = deliveryOptions[index].0
+        self.deliveryOptionsTextField.text = selectedText
+        let selectedAmount = deliveryOptions[index].1
+        self.deliveryCharge = Double(selectedAmount)
+            self.updateTotals()
+        
+      
+    }
+    
+    func presentDropdown(anchor: UITextField) {
+           myDropdown.show(over: view, anchor: anchor, dataSource: self)
+       }
+}
+
 
 class ProductListCell: UITableViewCell {
     
