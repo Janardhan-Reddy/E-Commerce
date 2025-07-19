@@ -15,7 +15,6 @@ class DeliveryAddress: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var WorkButton: UIButton!
     @IBOutlet weak var HomeButton: UIButton!
-    
     @IBOutlet weak var FullNameField: UITextField!
     @IBOutlet weak var PhoneNumberField: UITextField!
     @IBOutlet weak var PincodeField: UITextField!
@@ -78,49 +77,7 @@ class DeliveryAddress: UIViewController {
         }
     }
     
-    func validateAllFields() -> Bool {
-       
-        
-        guard let phoneNumber = PhoneNumberField.text, !phoneNumber.isEmpty else {
-            showAlert(message: "Phone Number is required.")
-            return false
-        }
-        
-        guard phoneNumber.count == 10,
-              CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: phoneNumber)) else {
-            showAlert(message: "Enter a valid 10-digit phone number.")
-            return false
-        }
-
-        guard let pincode = PincodeField.text, !pincode.isEmpty else {
-            showAlert(message: "Pincode is required.")
-            return false
-        }
-
-        guard pincode.count == 6,
-              CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: pincode)) else {
-            showAlert(message: "Enter a valid 6-digit pincode.")
-            return false
-        }
-        
-        let requiredFields = [
-            (FullNameField.text, "Full Name"),
-            (StateField.text, "State"),
-            (CityField.text, "City"),
-            (localityField.text, "Locality"),
-            (flatNumberField.text, "Flat/House Number"),
-            (landmarkFileld.text, "Landmark")
-        ]
-        
-        for (field, name) in requiredFields {
-            if field?.isEmpty ?? true {
-                showAlert(message: "\(name) is required.")
-                return false
-            }
-        }
-
-        return true
-    }
+    // MARK: Get Set Address
     
     func getAddressFromFields() -> (name: String, phone: Int64, pincode: Int64, state: String, city: String, locality: String, flat: String, landmark: String) {
         return (
@@ -150,19 +107,59 @@ class DeliveryAddress: UIViewController {
             updateAddress(newAddress, with: data)
         }
     }
-
-
     
-    func showAlert(message: String) {
-      let alert = UIAlertController(
-        title: "Validation Error",
-        message: message,
-        preferredStyle: .alert
-      )
-      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-      present(alert, animated: true, completion: nil)
+    
+    // MARK: Validation
+    
+    func validateAllFields() -> Bool {
+        guard let phoneNumber = PhoneNumberField.text, !phoneNumber.isEmpty else {
+            showAlert(title: "Phone Number Empty", message: "Phone Number is required.")
+            return false
+        }
+        
+        guard phoneNumber.count == 10,
+              CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: phoneNumber)) else {
+            showAlert(title: "Invalid Phone Number", message: "Enter a valid 10-digit phone number.")
+            return false
+        }
+
+        guard let pincode = PincodeField.text, !pincode.isEmpty else {
+            showAlert(title: "Invalid Pincode", message: "Pincode is required.")
+            return false
+        }
+
+        guard pincode.count == 6,
+              CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: pincode)) else {
+            showAlert(title: "Invalid Pincode", message: "Enter a valid 6-digit pincode.")
+            return false
+        }
+        
+        let requiredFields = [
+            (FullNameField.text, "Full Name"),
+            (StateField.text, "State"),
+            (CityField.text, "City"),
+            (localityField.text, "Locality"),
+            (flatNumberField.text, "Flat/House Number"),
+            (landmarkFileld.text, "Landmark")
+        ]
+        
+        for (field, name) in requiredFields {
+            if field?.isEmpty ?? true {
+                showAlert(title: "\(name) is Missing", message: "\(name) is required.")
+                return false
+            }
+        }
+
+        return true
     }
     
+   
+    
+
+    
+
+}
+extension DeliveryAddress {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //For mobile numer validation
         if textField == PhoneNumberField || textField == PincodeField{

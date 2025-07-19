@@ -163,13 +163,14 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
 
       if let img = bannerImages[indexPath.row] {
         // we already fetched & cached it
-          cell.bannerImageView.image  = resizeAndFill(image: img, targetSize: self.bounds.size)
+          cell.bannerImageView.image  = img
+          //resizeAndFill(image: img, targetSize: self.bounds.size)
          // resizeImage(image:img , targetSize: self.bounds.size)
-        cell.bannerImageView.contentMode = .scaleAspectFill
+          cell.bannerImageView.contentMode = .scaleAspectFit
       } else {
         // still loading: show placeholder
         cell.bannerImageView.image   = nil
-          cell.bannerImageView.contentMode = .scaleAspectFill
+          cell.bannerImageView.contentMode = .scaleAspectFit
       }
 
       return cell
@@ -193,33 +194,6 @@ class BannerCollectionView: UICollectionView, UICollectionViewDelegate, UICollec
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return .zero
-    }
-    
-    func resizeAndFill(image: UIImage, targetSize: CGSize) -> UIImage {
-        let sourceSize = image.size
-        
-        // 1) Figure out scale so the image fully covers the target
-        let widthRatio  = targetSize.width  / sourceSize.width
-        let heightRatio = targetSize.height / sourceSize.height
-        let scaleRatio = max(widthRatio, heightRatio)      // <-- aspect‐fill
-        
-        // 2) Compute the scaled image size
-        let scaledSize = CGSize(width: sourceSize.width * scaleRatio,
-                                height: sourceSize.height * scaleRatio)
-        
-        // 3) Center it in the target rectangle
-        let xOffset = (targetSize.width  - scaledSize.width)  / 2.0
-        let yOffset = (targetSize.height - scaledSize.height) / 2.0
-        let drawRect = CGRect(origin: CGPoint(x: xOffset, y: yOffset),
-                              size: scaledSize)
-        
-        // 4) Render into a new context of the exact targetSize
-        UIGraphicsBeginImageContextWithOptions(targetSize, false, UIScreen.main.scale)
-        image.draw(in: drawRect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage ?? image
     }
 
 }

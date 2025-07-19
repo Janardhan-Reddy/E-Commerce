@@ -12,17 +12,17 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Amazon Ember Medium.ttf">
+            <string>AmazonEmber-Medium</string>
+        </array>
+        <array key="Amazon Ember.ttf">
+            <string>AmazonEmber-Regular</string>
+        </array>
         <array key="AmazonEmber-Bold.ttf">
             <string>AmazonEmber-Bold</string>
         </array>
         <array key="AmazonEmber-Light.ttf">
             <string>AmazonEmber-Light</string>
-        </array>
-        <array key="AmazonEmber-Medium.ttf">
-            <string>AmazonEmber-Medium</string>
-        </array>
-        <array key="AmazonEmber-Regular.ttf">
-            <string>AmazonEmber-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -99,21 +99,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xO9-0P-FoB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1208.3969465648854" y="12.67605633802817"/>
-        </scene>
-        <!--Login Web Api Call-->
-        <scene sceneID="Vt5-AV-ADk">
-            <objects>
-                <viewController storyboardIdentifier="LoginWebApiCall" id="w3b-KV-K0x" customClass="LoginWebApiCall" customModule="GDRB__Ecommerce" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5Dv-Cg-vat">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="rPl-hI-zpd"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fh6-bg-NM9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="698" y="518"/>
         </scene>
         <!--LoginController-->
         <scene sceneID="W6w-Ag-pia">
@@ -332,7 +317,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qsp-ek-wvx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2872.5190839694656" y="836.61971830985919"/>
+            <point key="canvasLocation" x="2149" y="886"/>
         </scene>
         <!--CartViewController-->
         <scene sceneID="PeI-eT-hDx">
@@ -466,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SiR-v8-zGd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7996" y="2589"/>
+            <point key="canvasLocation" x="7031" y="1683"/>
         </scene>
         <!--MyOrdersViewController-->
         <scene sceneID="NyH-ej-F7z">
@@ -501,7 +486,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fkb-Al-LxZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8860.3053435114507" y="917.6056338028169"/>
+            <point key="canvasLocation" x="10164" y="250"/>
         </scene>
         <!--ProfileViewController-->
         <scene sceneID="ODX-BX-7qd">
@@ -593,7 +578,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cNg-29-qAm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10780.91603053435" y="917.6056338028169"/>
+            <point key="canvasLocation" x="8801" y="1682"/>
         </scene>
         <!--Delivery Address-->
         <scene sceneID="iRR-mC-Tit">
@@ -973,7 +958,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eKq-YF-0gX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11263.358778625954" y="19.718309859154932"/>
+            <point key="canvasLocation" x="11109" y="1013"/>
         </scene>
         <!--Saved Address-->
         <scene sceneID="lG9-ux-4a9">
@@ -1142,7 +1127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJS-xw-SxC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12286.259541984733" y="19.718309859154932"/>
+            <point key="canvasLocation" x="11795" y="1013"/>
         </scene>
         <!--Settings-->
         <scene sceneID="gMt-zZ-zT3">
@@ -1215,7 +1200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxE-rX-8o2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13026.717557251908" y="19.718309859154932"/>
+            <point key="canvasLocation" x="11108" y="1804"/>
         </scene>
         <!--Order Success Page-->
         <scene sceneID="vbA-10-oug">
@@ -1308,7 +1293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VdQ-OO-Exo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13881.679389312976" y="19.718309859154932"/>
+            <point key="canvasLocation" x="12995" y="1220"/>
         </scene>
         <!--Order Declain Page-->
         <scene sceneID="r8G-AA-9X6">
@@ -1385,7 +1370,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zcw-xq-sS1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14565.648854961832" y="19.718309859154932"/>
+            <point key="canvasLocation" x="12995" y="1976"/>
         </scene>
         <!--Side Menu Controller-->
         <scene sceneID="dFF-3Q-DOc">
@@ -1410,7 +1395,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DGl-CV-4gi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2524.4274809160306" y="35.91549295774648"/>
+            <point key="canvasLocation" x="2784" y="2303"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8Xu-uD-Qdh">
@@ -1433,7 +1418,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Jt-pE-HXh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6083.2061068702287" y="19.718309859154932"/>
+            <point key="canvasLocation" x="7196" y="-307"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Man-Fp-9x8">
@@ -1451,7 +1436,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v7s-vX-E8X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1404" y="34"/>
+            <point key="canvasLocation" x="1663" y="2301"/>
         </scene>
         <!--Onboarding Nav Controller-->
         <scene sceneID="cGM-jg-Pxl">
@@ -1680,7 +1665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5op-Kk-Xre" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4631.2977099236641" y="836.61971830985919"/>
+            <point key="canvasLocation" x="2949" y="886"/>
         </scene>
         <!--Item-->
         <scene sceneID="Td6-O6-F4N">
@@ -1816,7 +1801,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYW-Z5-Zf4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5344.2748091603053" y="836.61971830985919"/>
+            <point key="canvasLocation" x="5239" y="886"/>
         </scene>
         <!--Item-->
         <scene sceneID="Zjd-vU-tpc">
@@ -2023,7 +2008,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U10-es-BX9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3634" y="1508"/>
+            <point key="canvasLocation" x="4556" y="886"/>
         </scene>
         <!--Item-->
         <scene sceneID="068-Ia-Stc">
@@ -2178,7 +2163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O7u-uh-RGI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4418" y="1508"/>
+            <point key="canvasLocation" x="3815" y="886"/>
         </scene>
         <!--Item-->
         <scene sceneID="5ON-Yv-7oQ">
@@ -2273,13 +2258,13 @@
                                                 </constraints>
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dEd-8q-0B6" customClass="BannerCollectionView" customModule="GDRB__Ecommerce" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="100" width="383" height="200"/>
+                                                <rect key="frame" x="0.0" y="100" width="393" height="210"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="dah-qU-hX8"/>
+                                                    <constraint firstAttribute="height" constant="210" id="dah-qU-hX8"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="T5u-H3-fUl">
-                                                    <size key="itemSize" width="363" height="169"/>
+                                                    <size key="itemSize" width="392" height="205"/>
                                                     <size key="estimatedItemSize" width="378" height="175"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -2287,18 +2272,18 @@
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="d9m-0g-80m">
-                                                        <rect key="frame" x="0.0" y="0.0" width="378" height="200"/>
+                                                        <rect key="frame" x="0.0" y="2.6666666666666665" width="392" height="205"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ZbK-a0-JDb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="378" height="200"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="392" height="205"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </collectionViewCellContentView>
-                                                        <size key="customSize" width="378" height="200"/>
+                                                        <size key="customSize" width="392" height="205"/>
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
                                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BIr-Qr-Meu">
-                                                <rect key="frame" x="160" y="302" width="73" height="25"/>
+                                                <rect key="frame" x="160" y="312" width="73" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="y9L-fu-irv"/>
                                                 </constraints>
@@ -2306,7 +2291,7 @@
                                                 <color key="currentPageIndicatorTintColor" name="Color"/>
                                             </pageControl>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nhp-DM-bKX">
-                                                <rect key="frame" x="5" y="329" width="383" height="120"/>
+                                                <rect key="frame" x="5" y="377" width="383" height="120"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="120" id="IDT-Ho-xxi"/>
@@ -2360,13 +2345,13 @@
                                                 </cells>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Offers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6w-jH-H44">
-                                                <rect key="frame" x="10" y="459" width="106" height="25.666666666666686"/>
-                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="22"/>
+                                                <rect key="frame" x="10" y="507.00000000000006" width="87" height="21.666666666666686"/>
+                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HAt-fS-Nbv">
-                                                <rect key="frame" x="5" y="494.66666666666663" width="383" height="325"/>
+                                                <rect key="frame" x="5" y="538.66666666666663" width="383" height="325"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="325" id="A79-eL-Kci"/>
@@ -2391,7 +2376,7 @@
                                                 </cells>
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="McO-oR-uaW">
-                                                <rect key="frame" x="5" y="860.66666666666652" width="383" height="580"/>
+                                                <rect key="frame" x="5" y="900.33333333333348" width="383" height="580"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="580" id="6k9-6d-AsW"/>
@@ -2416,23 +2401,32 @@
                                                 </cells>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recomanded for you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W64-oB-sH0">
-                                                <rect key="frame" x="10" y="829.66666666666663" width="209" height="26"/>
-                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="22"/>
+                                                <rect key="frame" x="10" y="873.66666666666663" width="171" height="21.666666666666629"/>
+                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track in Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Idz-dE-TTB">
-                                                <rect key="frame" x="10" y="1450.6666666666667" width="144.66666666666666" height="25.666666666666742"/>
-                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="22"/>
+                                                <rect key="frame" x="9.9999999999999929" y="1490.3333333333333" width="118.33333333333331" height="20.666666666666742"/>
+                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Trackingimage3" translatesAutoresizingMaskIntoConstraints="NO" id="9uY-gr-wLB">
-                                                <rect key="frame" x="5" y="1481.3333333333333" width="383" height="200"/>
+                                                <rect key="frame" x="2" y="1516" width="389" height="220"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="1y8-Eh-lrU"/>
+                                                    <constraint firstAttribute="height" constant="220" id="1y8-Eh-lrU"/>
                                                 </constraints>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5M-Q3-SZ6">
+                                                <rect key="frame" x="10" y="342" width="87.333333333333329" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="CjE-3x-5M4"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AmazonEmber-Medium" family="Amazon Ember" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -2441,20 +2435,21 @@
                                             <constraint firstItem="BIr-Qr-Meu" firstAttribute="top" secondItem="dEd-8q-0B6" secondAttribute="bottom" constant="2" id="6gb-3W-mrW"/>
                                             <constraint firstItem="gxS-PG-RZ9" firstAttribute="top" secondItem="eKI-yZ-3MI" secondAttribute="top" id="AT0-fc-CDk"/>
                                             <constraint firstItem="dEd-8q-0B6" firstAttribute="top" secondItem="da0-lx-TLD" secondAttribute="bottom" constant="10" id="DYj-Eq-2PL"/>
-                                            <constraint firstItem="dEd-8q-0B6" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="5" id="Fjc-J4-YgE"/>
-                                            <constraint firstAttribute="trailing" secondItem="9uY-gr-wLB" secondAttribute="trailing" constant="5" id="Gs5-vO-iqZ"/>
+                                            <constraint firstItem="dEd-8q-0B6" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" id="Fjc-J4-YgE"/>
+                                            <constraint firstAttribute="trailing" secondItem="9uY-gr-wLB" secondAttribute="trailing" constant="2" id="Gs5-vO-iqZ"/>
                                             <constraint firstItem="W64-oB-sH0" firstAttribute="top" secondItem="HAt-fS-Nbv" secondAttribute="bottom" constant="10" id="LPn-pj-MHm"/>
                                             <constraint firstItem="HAt-fS-Nbv" firstAttribute="top" secondItem="n6w-jH-H44" secondAttribute="bottom" constant="10" id="Mhp-gl-4MY"/>
                                             <constraint firstItem="da0-lx-TLD" firstAttribute="top" secondItem="gxS-PG-RZ9" secondAttribute="bottom" id="NJo-gu-KgH"/>
-                                            <constraint firstItem="Nhp-DM-bKX" firstAttribute="top" secondItem="BIr-Qr-Meu" secondAttribute="bottom" constant="2" id="Ozc-sL-UNr"/>
                                             <constraint firstAttribute="trailing" secondItem="HAt-fS-Nbv" secondAttribute="trailing" constant="5" id="Qfn-3c-nFI"/>
                                             <constraint firstItem="Nhp-DM-bKX" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="5" id="VQA-EC-fmc"/>
                                             <constraint firstAttribute="height" constant="1900" id="Vqn-fq-TcY"/>
-                                            <constraint firstItem="9uY-gr-wLB" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="5" id="ZCe-Fp-em4"/>
+                                            <constraint firstItem="9uY-gr-wLB" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="2" id="ZCe-Fp-em4"/>
                                             <constraint firstItem="Idz-dE-TTB" firstAttribute="top" secondItem="McO-oR-uaW" secondAttribute="bottom" constant="10" id="akt-Ik-fmr"/>
                                             <constraint firstItem="gxS-PG-RZ9" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" id="bFd-Xi-IYc"/>
                                             <constraint firstItem="9uY-gr-wLB" firstAttribute="top" secondItem="Idz-dE-TTB" secondAttribute="bottom" constant="5" id="dNL-tc-Vag"/>
+                                            <constraint firstItem="T5M-Q3-SZ6" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="10" id="iew-uh-5Ou"/>
                                             <constraint firstAttribute="trailing" secondItem="Nhp-DM-bKX" secondAttribute="trailing" constant="5" id="iqp-pR-mPN"/>
+                                            <constraint firstItem="T5M-Q3-SZ6" firstAttribute="top" secondItem="BIr-Qr-Meu" secondAttribute="bottom" constant="5" id="jar-cc-f9u"/>
                                             <constraint firstItem="W64-oB-sH0" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="10" id="k0b-Zx-FQf"/>
                                             <constraint firstItem="da0-lx-TLD" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" id="kD1-j8-yr3"/>
                                             <constraint firstItem="Idz-dE-TTB" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="10" id="lM2-0J-GOv"/>
@@ -2465,7 +2460,8 @@
                                             <constraint firstItem="HAt-fS-Nbv" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="5" id="qyF-qI-qnM"/>
                                             <constraint firstItem="McO-oR-uaW" firstAttribute="leading" secondItem="eKI-yZ-3MI" secondAttribute="leading" constant="5" id="vbZ-5l-aGu"/>
                                             <constraint firstItem="n6w-jH-H44" firstAttribute="top" secondItem="Nhp-DM-bKX" secondAttribute="bottom" constant="10" id="xBk-Mq-L9u"/>
-                                            <constraint firstAttribute="trailing" secondItem="dEd-8q-0B6" secondAttribute="trailing" constant="5" id="zyS-jC-XTL"/>
+                                            <constraint firstItem="Nhp-DM-bKX" firstAttribute="top" secondItem="T5M-Q3-SZ6" secondAttribute="bottom" constant="10" id="zCt-fW-FtX"/>
+                                            <constraint firstAttribute="trailing" secondItem="dEd-8q-0B6" secondAttribute="trailing" id="zyS-jC-XTL"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2503,7 +2499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5QX-dq-Khd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7008.3969465648852" y="950.70422535211276"/>
+            <point key="canvasLocation" x="6081.679389312977" y="1648.5915492957747"/>
         </scene>
         <!--Home-->
         <scene sceneID="iJh-dk-dae">
@@ -2558,7 +2554,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZp-LN-qGf">
-                                                                    <rect key="frame" x="16.666666666666671" y="69.333333333333329" width="77.999999999999986" height="14.666666666666671"/>
+                                                                    <rect key="frame" x="16.666666666666671" y="69.333333333333329" width="78" height="14.666666666666671"/>
                                                                     <fontDescription key="fontDescription" name="AmazonEmber-Regular" family="Amazon Ember" pointSize="12"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -2665,7 +2661,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Electronics1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="fts-YN-iYz">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Electronics" translatesAutoresizingMaskIntoConstraints="NO" id="fts-YN-iYz">
                                                                 <rect key="frame" x="0.0" y="28" width="373" height="200"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="200" id="lhj-BN-laM"/>
@@ -2737,7 +2733,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ha4-BU-TOg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12396.183206106869" y="660.56338028169023"/>
+            <point key="canvasLocation" x="6140" y="2340"/>
         </scene>
         <!--Home-->
         <scene sceneID="UTH-2k-0Ft">
@@ -3413,7 +3409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Avh-Ub-yIM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5974.8091603053435" y="1895.7746478873241"/>
+            <point key="canvasLocation" x="6141" y="2997"/>
         </scene>
         <!--MyCart-->
         <scene sceneID="x5K-ow-TXY">
@@ -3432,7 +3428,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KQk-5i-LjL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7275.5725190839694" y="2589.4366197183099"/>
+            <point key="canvasLocation" x="7031" y="951"/>
         </scene>
         <!--Home-->
         <scene sceneID="h6o-NW-KHE">
@@ -3779,7 +3775,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tRR-yc-Opg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7995" y="1620"/>
+            <point key="canvasLocation" x="7934" y="1682"/>
         </scene>
         <!--Home-->
         <scene sceneID="FzK-fP-kbI">
@@ -3817,7 +3813,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0QF-Ac-ggg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9854.1984732824421" y="917.6056338028169"/>
+            <point key="canvasLocation" x="8802" y="918"/>
         </scene>
         <!--MyOrders-->
         <scene sceneID="qvb-78-ce9">
@@ -3862,7 +3858,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTP-96-4K2" customClass="ShadowView" customModule="GDRB__Ecommerce" customModuleProvider="target">
                                                     <rect key="frame" x="5" y="5" width="383" height="105"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image11" translatesAutoresizingMaskIntoConstraints="NO" id="WZd-k4-5vV">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WZd-k4-5vV">
                                                             <rect key="frame" x="19.999999999999993" y="8" width="89.333333333333314" height="89"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="WZd-k4-5vV" secondAttribute="height" multiplier="1:1" id="yPd-Fw-WXW"/>
@@ -3969,7 +3965,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Apg-8k-ptG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10253" y="2588"/>
+            <point key="canvasLocation" x="10163" y="1756"/>
         </scene>
         <!--MyCart-->
         <scene sceneID="prl-zr-6es">
@@ -3988,7 +3984,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4TF-LA-RR8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9534" y="2589"/>
+            <point key="canvasLocation" x="10163" y="1013"/>
         </scene>
     </scenes>
     <resources>
@@ -3996,7 +3992,7 @@
         <image name="BottomCircularView" width="428" height="379"/>
         <image name="ChangePassword" width="264.66665649414062" height="268.66665649414062"/>
         <image name="Declaine" width="328" height="328"/>
-        <image name="Electronics1 (1)" width="1584" height="720"/>
+        <image name="Electronics" width="1584" height="720"/>
         <image name="ForgotPassword" width="306" height="309"/>
         <image name="GDRBECO_Banner" width="314.33334350585938" height="107.66666412353516"/>
         <image name="Onboard01" width="354" height="354"/>
